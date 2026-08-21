@@ -1,0 +1,17 @@
+<div class="input-area">
+  <div class="input-wrapper">
+    <input
+      type="text"
+      [(ngModel)]="text"
+      (keyup.enter)="send()"
+      placeholder="Mesaj yazın..."
+      [disabled]="store.isLoading()"
+    />
+    <button (click)="send()" [disabled]="!text.trim() || store.isLoading()">
+      {{ store.isLoading() ? '⏳' : '📤' }}
+    </button>
+  </div>
+  <div *ngIf="store.error()" class="error-msg">
+    {{ store.error() }}
+  </div>
+</div>

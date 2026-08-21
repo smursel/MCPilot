@@ -1,0 +1,9 @@
+<div [class]="'message message-' + message.role">
+  <div class="avatar">{{ message.role === 'user' ? '👤' : '🤖' }}</div>
+  <div class="bubble">
+    <div class="text">{{ message.content }}</div>
+    <div *ngIf="message.status === 'streaming'" class="status streaming">Yazılıyor...</div>
+    <div *ngIf="message.status === 'error'" class="status error">{{ message.error }}</div>
+    <div class="timestamp">{{ message.timestamp | date: 'short' }}</div>
+  </div>
+</div>

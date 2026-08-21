@@ -1,0 +1,5 @@
+<div class="message-list">
+  <div *ngFor="let msg of (store.currentSession()?.messages || [])" class="msg-item">
+    <app-message-item [message]="msg" />
+  </div>
+</div>

@@ -1,0 +1,71 @@
+.message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+
+  &.message-user {
+    flex-direction: row-reverse;
+
+    .bubble {
+      background: #2196f3;
+      color: white;
+    }
+  }
+
+  &.message-assistant {
+    .bubble {
+      background: #f5f5f5;
+      color: #333;
+    }
+  }
+
+  .avatar {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bubble {
+    max-width: 60%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    word-wrap: break-word;
+
+    .text {
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .status {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 4px;
+
+      &.streaming {
+        animation: blink 1s infinite;
+      }
+
+      &.error {
+        color: #d32f2f;
+      }
+    }
+
+    .timestamp {
+      font-size: 11px;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.5;
+  }
+}

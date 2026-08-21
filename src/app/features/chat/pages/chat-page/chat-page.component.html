@@ -1,0 +1,9 @@
+<div class="chat-page">
+  <div *ngIf="currentSession(); else noSession">
+    <app-message-list />
+    <app-message-input />
+  </div>
+  <ng-template #noSession>
+    <div class="no-session">Sohbet yükleniyor...</div>
+  </ng-template>
+</div>
