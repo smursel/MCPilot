@@ -1,71 +1,83 @@
-.message {
+.message-wrapper {
   display: flex;
-  gap: 12px;
+  gap: 12px; /* ikon ile balon arası boşluk */
   align-items: flex-end;
-
-  &.message-user {
-    flex-direction: row-reverse;
-
+  margin-bottom: 8px;
+  
+  /* ai mesaj yerleşimi - sol hizalı */
+  &.is-ai {
+    flex-direction: row;
+    
     .bubble {
-      background: #2196f3;
-      color: white;
+      background: var(--ai-bubble-bg);
+      color: var(--ai-text);
+      border-radius: 20px 20px 20px 4px;
+    }
+    
+    .avatar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
   }
 
-  &.message-assistant {
+  /* kullanıcı mesaj yerleşimi - sağ hizalı */
+  &.is-user {
+    flex-direction: row-reverse;
+    
     .bubble {
-      background: #f5f5f5;
-      color: #333;
+      background: var(--user-bubble-bg);
+      color: var(--user-text);
+      border-radius: 20px 20px 4px 20px;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
     }
   }
 
   .avatar {
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    font-size: 18px; /* net görünüm için robot ikon boyutu */
+    flex-shrink: 0;
   }
 
   .bubble {
-    max-width: 60%;
-    padding: 12px 16px;
-    border-radius: 12px;
+    max-width: 80%; /* ferah görünüm için maksimum genişlik oranı */
+    padding: 14px 18px;
+    font-size: clamp(14px, 1.2vw + 0.5vh, 16px);
+    line-height: 1.5;
     word-wrap: break-word;
-
-    .text {
+    
+    .content {
       margin-bottom: 4px;
-      line-height: 1.4;
     }
 
-    .status {
-      font-size: 12px;
-      opacity: 0.8;
-      margin-top: 4px;
-
-      &.streaming {
-        animation: blink 1s infinite;
-      }
-
-      &.error {
-        color: #d32f2f;
-      }
-    }
-
-    .timestamp {
+    .meta-data {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
       font-size: 11px;
-      opacity: 0.6;
-      margin-top: 4px;
+      opacity: 0.7;
+      margin-top: 6px;
+      
+      .status-indicator {
+        animation: pulse 1.5s infinite;
+        font-weight: 500;
+      }
+      
+      .status-error {
+        color: var(--accent-coral);
+        font-weight: 600;
+      }
     }
   }
 }
 
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0.5;
-  }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }

@@ -66,4 +66,14 @@ export class MessageInputComponent {
 
     this.text = '';
   }
+
+  // enter tuşu yönetimi - shift basılıysa alt satıra geçer, değilse mesajı gönderir
+  handleEnter(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    
+    if (!keyboardEvent.shiftKey) {
+      event.preventDefault(); 
+      this.send();
+    }
+  }
 }

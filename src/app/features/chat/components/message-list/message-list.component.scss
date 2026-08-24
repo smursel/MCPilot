@@ -1,23 +1,33 @@
+/* host yüksekliği ve tint arka plan sabitlemesi */
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden; 
+  background-color: var(--bg-tint); 
+}
+
 .message-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
+  height: 100%;
+  overflow-y: auto; 
+  
+  /* ferah görünüm için optimize edilmiş yan padding değerleri */
+  padding: clamp(16px, 2vh, 24px) clamp(8px, 2vw, 16px); 
+  
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 24px; 
+
+  /* özel kaydırma çubuğu tasarımı */
+  &::-webkit-scrollbar { width: 8px; }
+  &::-webkit-scrollbar-thumb { background-color: #cfcfcf; border-radius: 10px; }
+  &::-webkit-scrollbar-track { background: transparent; }
 }
 
 .msg-item {
-  animation: slideIn 0.3s ease-out;
+  animation: slideIn 0.3s ease-out forwards;
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }

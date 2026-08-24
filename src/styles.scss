@@ -1,3 +1,67 @@
+/* src/styles.scss */
+
+:root {
+  /* Brand Colors - Complementary Palette */
+  --primary-blue: #1E40AF; /* Sophisticated modern navy for trust & analytics */
+  --accent-coral: #FF6B6B; /* Sweet energetic coral for prominent actions */
+  
+  /* Backgrounds */
+  --bg-tint: #F8FAFC; /* Tinted off-white for reduced visual fatigue */
+  --surface-white: #FFFFFF;
+  
+  /* Chat Bubbles */
+  --user-bubble-bg: var(--primary-blue);
+  --user-text: #FFFFFF;
+  
+  /* AI Bubble - High contrast, accessible slate tint */
+  --ai-bubble-bg: #E2E8F0; 
+  --ai-text: #0F172A; 
+  
+  /* Utility */
+  --border-color: #E2E8F0;
+  --text-muted: #64748B;
+  
+  /* EKLENEN: Ana metin rengini değişkene aldık ki karanlık modda ezebilelim ✨ */
+  --text-primary: #333333; 
+
+  --focus-border-color: #2563EB;
+  --focus-box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* EKLENEN: Karanlık Tema (Dark Mode) Renk Paleti 🌙 */
+/* src/styles.scss (Sadece Dark Mode Bloğu) */
+
+/* src/styles.scss (Dark Mode Paleti - High Contrast & Deep Dark) */
+
+[data-theme='dark'] {
+  /* 1. Gerçek Derin Dark Zemin (OLED / Slate Black) ✨ */
+  --bg-tint: #07090E; 
+  
+  /* 2. Kartlar ve Input Alanı için Tok Koyu Gri/Lacivert */
+  --surface-white: #121826;
+  
+  /* 3. Kullanıcı Mesajı: O korkunç alarm mercanı yerine, 
+     karanlıkta parlayan ama göz yormayan tok bir "Electric Blue" veya canlı "Cyber Neon Blue" 
+     ya da istediğin o tok kontrastlı şık bir ton. 
+     (Açık mavi tonu dark modda kullanıcı için en yüksek okunabilirliği verir!) */
+  --user-bubble-bg: #E05A47; 
+  --user-text: #F8FAFC; /* Üzerindeki metin yumuşak bir beyaz/kırık beyaz */
+  
+  /* 4. AI Balonu: Koyu füme/gri, arkasından mükemmel ayrılır */
+  --ai-bubble-bg: #1E293B; 
+  --ai-text: #F1F5F9; 
+  
+  /* 5. Kenarlıklar ve Metinler */
+  --border-color: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-muted: #94A3B8;
+
+  --focus-border-color: var(--accent-coral);
+  --focus-box-shadow: 0 0 0 3px rgba(224, 90, 71, 0.2);
+  
+  --accent-coral: #E05A47; /* Vurgu rengimiz daha tatlı bir pembe/mercan */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +71,15 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   font-size: 14px;
-  color: #333;
-  background: #fafafa;
+  
+  /* GÜNCELLENEN: Sabit #333 yerine değişkene bağladık */
+  color: var(--text-primary); 
+  
+  /* Bembeyaz yerine o tatlı tinted arkaplanımızı veriyoruz ✨ */
+  background: var(--bg-tint); 
+  
+  /* EKLENEN: Tema geçişi pürüzsüz olsun diye A11y dostu bir transition */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html, body {

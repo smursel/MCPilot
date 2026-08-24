@@ -3,13 +3,65 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background-color: #fafafa;
+}
 
-  .no-session {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-size: 16px;
-    color: #666;
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* mesaj listesi alanı - kalan tüm boşluğu esnek bir şekilde kaplama */
+app-message-list {
+  flex: 1;
+  overflow: hidden; 
+}
+
+/* input bileşeni - ezilmesini önleyerek en alta sabitleme */
+app-message-input {
+  flex-shrink: 0; 
+}
+
+.no-session {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px;
+  color: #666;
+}
+
+/* tema değiştirme butonu - sol üst köşe konumlandırma ve efektler */
+.theme-toggle-btn {
+  position: absolute; 
+  top: 24px;
+  left: 24px; 
+  z-index: 1000; 
+  
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  
+  background: var(--surface-white);
+  border: 1px solid rgba(148, 163, 184, 0.4); 
+  color: var(--text-primary);
+  
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.95);
   }
 }

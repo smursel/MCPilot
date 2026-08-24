@@ -1,5 +1,12 @@
+<!-- tema değiştirme butonu - sol üst köşede floating (sabit) yapı -->
+<button class="theme-toggle-btn" (click)="toggleTheme()" aria-label="Toggle Theme">
+  <span *ngIf="store.theme() === 'light'">🌙</span>
+  <span *ngIf="store.theme() === 'dark'">☀️</span>
+</button>
+ 
 <div class="chat-page">
-  <div *ngIf="currentSession(); else noSession">
+  <!-- aktif oturum var mı kontrolü - varsa sohbet bileşenlerini listeler -->
+  <div class="chat-container" *ngIf="currentSession(); else noSession">
     <app-message-list />
     <app-message-input />
   </div>

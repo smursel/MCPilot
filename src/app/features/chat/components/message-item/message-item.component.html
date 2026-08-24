@@ -1,9 +1,18 @@
-<div [class]="'message message-' + message.role">
-  <div class="avatar">{{ message.role === 'user' ? '👤' : '🤖' }}</div>
-  <div class="bubble">
-    <div class="text">{{ message.content }}</div>
-    <div *ngIf="message.status === 'streaming'" class="status streaming">Yazılıyor...</div>
-    <div *ngIf="message.status === 'error'" class="status error">{{ message.error }}</div>
-    <div class="timestamp">{{ message.timestamp | date: 'short' }}</div>
+<div [class]="'message-wrapper ' + (message.role === 'user' ? 'is-user' : 'is-ai')">
+  
+  <!-- ai avatar alanı - sadece asistan için robot ikonu gösterimi -->
+  <div *ngIf="message.role === 'assistant'" class="avatar" aria-label="AI Assistant" role="img">
+    <span>🤖</span>
   </div>
+  
+  <div class="bubble">
+    <div class="content">{{ message.content }}</div>
+    
+    <div class="meta-data">
+      <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
+      <span *ngIf="message.status === 'streaming'" class="status-indicator">Yazıyor...</span>
+      <span *ngIf="message.status === 'error'" class="status-error">Hata oluştu</span>
+    </div>
+  </div>
+  
 </div>

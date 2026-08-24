@@ -1,4 +1,5 @@
-<div class="message-list">
+<div class="message-list" #scrollContainer>
+  <!-- mesaj listesi döngüsü - oturuma ait mesajları tek tek işler -->
   <div *ngFor="let msg of (store.currentSession()?.messages || [])" class="msg-item">
     <app-message-item [message]="msg" />
   </div>

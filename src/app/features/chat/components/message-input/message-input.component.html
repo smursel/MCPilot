@@ -1,17 +1,45 @@
-<div class="input-area">
+<form class="message-form" (ngSubmit)="send()">
   <div class="input-wrapper">
-    <input
-      type="text"
+    
+    <!-- textarea alanı - çok satırlı girdi ve yüklenme anında kilitlenme için -->
+    <textarea
+      name="messageInput"
       [(ngModel)]="text"
-      (keyup.enter)="send()"
-      placeholder="Mesaj yazın..."
+      (keydown.enter)="handleEnter($event)"
+      placeholder="Mesajını yaz..."
       [disabled]="store.isLoading()"
-    />
-    <button (click)="send()" [disabled]="!text.trim() || store.isLoading()">
-      {{ store.isLoading() ? '⏳' : '📤' }}
+      aria-label="Chat message input"
+      rows="1"
+    ></textarea>
+    
+    <!-- gönder butonu - yükleme durumunda yönetim ve boş metin engellemesi için -->
+    <button 
+      type="submit" 
+      [disabled]="!text.trim() || store.isLoading()"
+      aria-label="Send message"
+      class="send-btn"
+    >
+      <span *ngIf="store.isLoading()">...</span>
+      <svg 
+        *ngIf="!store.isLoading()" 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="20" 
+        height="20" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      >
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
     </button>
   </div>
-  <div *ngIf="store.error()" class="error-msg">
+  
+  <!-- hata mesajı alanı - API hatalarını erişilebilir şekilde yansıtmak için -->
+  <div *ngIf="store.error()" class="error-msg" role="alert">
     {{ store.error() }}
   </div>
-</div>
+</form>
