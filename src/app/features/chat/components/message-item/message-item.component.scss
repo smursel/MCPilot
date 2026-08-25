@@ -81,3 +81,30 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+
+/* -- Animated typing dots for the AI processing state */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 2px;
+  height: 20px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    animation: typingBounce 1.4s infinite ease-in-out both;
+
+    /* -- Staggered animation delays for the wave effect */
+    &:nth-child(1) { animation-delay: -0.32s; }
+    &:nth-child(2) { animation-delay: -0.16s; }
+  }
+}
+
+/* -- Keyframes for the dot wave animation */
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}

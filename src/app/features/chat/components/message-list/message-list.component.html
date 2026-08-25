@@ -1,6 +1,24 @@
 <div class="message-list" #scrollContainer>
-  <!-- mesaj listesi döngüsü - oturuma ait mesajları tek tek işler -->
-  <div *ngFor="let msg of (store.currentSession()?.messages || [])" class="msg-item">
-    <app-message-item [message]="msg" />
+  
+  <!-- -- Displays BI-focused welcoming hero area when the analytical session is empty -->
+  <div *ngIf="(store.currentSession()?.messages?.length || 0) === 0" class="hero-empty-state">
+    <div class="hero-icon-wrapper" aria-hidden="true">
+      <!-- -- Using a chart/analytics SVG icon instead of a generic robot to match the BI context -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="analytics-icon">
+        <line x1="18" y1="20" x2="18" y2="10"></line>
+        <line x1="12" y1="20" x2="12" y2="4"></line>
+        <line x1="6" y1="20" x2="6" y2="14"></line>
+      </svg>
+    </div>
+    <h1 class="hero-title">Veri Analizine Hazırım</h1>
+    <p class="hero-subtitle">E-ticaret metriklerini, satış trendlerini ve müşteri verilerini doğal dil ile analiz etmek için bana bir soru sorun.</p>
   </div>
+
+  <!-- -- Iterates through chat history when messages exist -->
+  <ng-container *ngIf="(store.currentSession()?.messages?.length || 0) > 0">
+    <div *ngFor="let msg of store.currentSession()?.messages" class="msg-item">
+      <app-message-item [message]="msg" />
+    </div>
+  </ng-container>
+
 </div>

@@ -1,16 +1,24 @@
 <div [class]="'message-wrapper ' + (message.role === 'user' ? 'is-user' : 'is-ai')">
   
-  <!-- ai avatar alanı - sadece asistan için robot ikonu gösterimi -->
+  <!-- -- AI avatar area -->
   <div *ngIf="message.role === 'assistant'" class="avatar" aria-label="AI Assistant" role="img">
     <span>🤖</span>
   </div>
   
   <div class="bubble">
-    <div class="content">{{ message.content }}</div>
+    <!-- -- Display text if sent, otherwise show animated typing indicator for streaming state -->
+    <div class="content">
+      <ng-container *ngIf="message.status !== 'streaming'">{{ message.content }}</ng-container>
+      
+      <div *ngIf="message.status === 'streaming'" class="typing-indicator" aria-label="AI is analyzing data">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
     
-    <div class="meta-data">
+    <div class="meta-data" *ngIf="message.status !== 'streaming'">
       <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
-      <span *ngIf="message.status === 'streaming'" class="status-indicator">Yazıyor...</span>
       <span *ngIf="message.status === 'error'" class="status-error">Hata oluştu</span>
     </div>
   </div>
