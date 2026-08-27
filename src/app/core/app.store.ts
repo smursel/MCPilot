@@ -8,12 +8,14 @@ export class AppStore {
   private readonly _isLoading = signal(false);
   private readonly _error = signal<string | null>(null);
   private readonly _theme = signal<'light' | 'dark'>('light');
+  private readonly _language = signal<'tr' | 'en'>('tr');
 
   readonly sessions = this._sessions.asReadonly();
   readonly currentSessionId = this._currentSessionId.asReadonly();
   readonly isLoading = this._isLoading.asReadonly();
   readonly error = this._error.asReadonly();
   readonly theme = this._theme.asReadonly();
+  readonly language = this._language.asReadonly();
 
   readonly currentSession = computed(() => {
     const id = this._currentSessionId();
@@ -65,6 +67,10 @@ export class AppStore {
 
   setTheme(theme: 'light' | 'dark'): void {
     this._theme.set(theme);
+  }
+
+  setLanguage(lang: 'tr' | 'en'): void { // YENİ ✨
+    this._language.set(lang);
   }
 
   clearError(): void {

@@ -1,9 +1,28 @@
-<!-- tema değiştirme butonu - sol üst köşede floating (sabit) yapı -->
-<button class="theme-toggle-btn" (click)="toggleTheme()" aria-label="Toggle Theme">
+<!-- Sol üst köşede floating (sabit) buton grubu -->
+<div class="top-actions">
+  <!-- Geri Dön Butonu -->
+  <button class="icon-btn" (click)="goBack()" aria-label="Back to Dashboard" title="Dashboard'a Dön">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="vurgu-icon">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+  </button>
+
+<!-- Dil Değiştirme Butonu -->
+  <button class="icon-btn" (click)="toggleLanguage()" aria-label="Toggle Language" title="Dili Değiştir">
+    <span style="font-size: 13px; font-weight: 700; font-family: monospace; color: var(--text-primary);">
+      {{ store.language() === 'tr' ? 'EN' : 'TR' }}
+    </span>
+  </button>
+
+<!-- tema değiştirme butonu -->
+<button class="icon-btn" (click)="toggleTheme()" aria-label="Toggle Theme">
   <span *ngIf="store.theme() === 'light'">🌙</span>
   <span *ngIf="store.theme() === 'dark'">☀️</span>
 </button>
+</div>
  
+<!-- Chat Alanı -->
 <div class="chat-page">
   <!-- aktif oturum var mı kontrolü - varsa sohbet bileşenlerini listeler -->
   <div class="chat-container" *ngIf="currentSession(); else noSession">
@@ -11,6 +30,6 @@
     <app-message-input />
   </div>
   <ng-template #noSession>
-    <div class="no-session">Sohbet yükleniyor...</div>
+    <div class="no-session">{{ store.language() === 'tr' ? 'Sohbet yükleniyor...' : 'Loading chat...' }}</div>
   </ng-template>
 </div>

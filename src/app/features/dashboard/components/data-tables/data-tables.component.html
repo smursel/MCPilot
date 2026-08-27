@@ -1,0 +1,112 @@
+<!-- Table container providing spatial boundaries -->
+<section class="tables-section" aria-label="Data Tables">
+      
+  <!-- PRODUCT TABLE -->
+  <!-- Contextual rendering: Shown only when relevant to the user's analytical focus -->
+  @if (mode === 'sales' || mode === 'product') {
+    <div class="table-card">
+      
+      <div class="table-card__header">
+        <div class="table-card__title">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.9 4.6L12 5L9 7.8L9.9 12L6.5 10L3.1 12L4 7.8L1 5L5.1 4.6L6.5 1Z" stroke="#F59E0B" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
+          {{ store.language() === 'tr' ? 'Adet Bazında En Çok Satan Ürünler' : 'Top Products by Quantity' }}
+        </div>
+        <button class="btn--icon btn--ghost" aria-label="Download Report">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1V10M3 7L6.5 10.5L10 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="1" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      
+      <!-- Scroll wrapper acts as a fallback for ultra-narrow viewports (mobile) -->
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="th--center">#</th>
+              <th>{{ store.language() === 'tr' ? 'Ürün' : 'Product' }}</th>
+              <th class="th--right">{{ store.language() === 'tr' ? 'Adet' : 'Units' }}</th>
+              <th class="th--right">{{ store.language() === 'tr' ? 'Ciro' : 'Revenue' }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Iterates over reactive signals to ensure DOM updates automatically on data fetch -->
+            @for (p of dashboardService.topProducts(); track p.rank) {
+              <tr>
+                <td class="td--rank">{{ p.rank }}</td>
+                <td>
+                  <div class="td-name">{{ p.name }}</div>
+                  <div class="td-cat">{{ p.category }}</div>
+                </td>
+                <!-- Currency and number pipes enforce global formatting standards -->
+                <td class="td--mono th--right">{{ p.units | number }}</td>
+                <td class="td--revenue">{{ p.revenue | currency:'USD':'symbol':'1.0-0' }}</td>
+                <td class="td--trend" [class.td--up]="p.trend === 'up'" [class.td--down]="p.trend === 'down'">
+                  @if (p.trend === 'up') {
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="1,10 5,6 8,8 12,3" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  } @else {
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><polyline points="1,3 5,7 8,5 12,10" stroke="#FF6B6B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  <!-- CUSTOMER TABLE -->
+  @if (mode === 'sales' || mode === 'customer') {
+    <div class="table-card">
+      
+      <div class="table-card__header">
+        <div class="table-card__title">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.9 4.6L12 5L9 7.8L9.9 12L6.5 10L3.1 12L4 7.8L1 5L5.1 4.6L6.5 1Z" stroke="#F59E0B" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
+          {{ store.language() === 'tr' ? 'Sadakat Puanına Göre En İyi Müşteriler' : 'Top Customers by Loyalty Score' }}
+        </div>
+        <button class="btn--icon btn--ghost" aria-label="Download Report">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1V10M3 7L6.5 10.5L10 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="1" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="th--center">#</th>
+              <th>{{ store.language() === 'tr' ? 'Müşteri' : 'Customer' }}</th>
+              <th>{{ store.language() === 'tr' ? 'Sadakat Puanı' : 'Loyalty Score' }}</th>
+              <th class="th--right">{{ store.language() === 'tr' ? 'Toplam Değer' : 'Life Time Value' }}</th>
+              <th class="th--right">{{ store.language() === 'tr' ? 'Siparişler' : 'Orders' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of dashboardService.topCustomers(); track c.rank) {
+              <tr>
+                <td class="td--rank">{{ c.rank }}</td>
+                <td>
+                  <div class="td-name">{{ c.name }}</div>
+                  <span class="badge" [class.badge--vip]="c.segment === 'VIP'" [class.badge--loyal]="c.segment === 'Loyal'" [class.badge--standard]="c.segment === 'Standard'">
+                    {{ store.language() === 'tr' && c.segment === 'Loyal' ? 'Sadık' : (store.language() === 'tr' && c.segment === 'Standard' ? 'Standart' : c.segment) }}
+                  </span>
+                </td>
+                <td>
+                  <!-- Visual bar implementation maps score integer directly to CSS width -->
+                  <div class="score-bar">
+                    <div class="score-bar__track">
+                      <div class="score-bar__fill" [style.width.%]="c.score"></div>
+                    </div>
+                    <span class="score-bar__value">{{ c.score }}</span>
+                  </div>
+                </td>
+                <td class="td--revenue">{{ c.ltv | currency:'USD':'symbol':'1.0-0' }}</td>
+                <td class="td--mono th--right">{{ c.orders | number }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</section>

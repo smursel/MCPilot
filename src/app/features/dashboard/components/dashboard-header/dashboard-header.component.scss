@@ -1,0 +1,111 @@
+/* Host guarantees header anchors fully across the viewport */
+:host { 
+  display: block; 
+  width: 100%; 
+  flex-shrink: 0; 
+  z-index: 30; 
+}
+
+/* Fluid container adapting to breakpoints for seamless responsiveness */
+.header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  gap: clamp(8px, 2vw, 16px); 
+  height: clamp(56px, 6vh, 64px); 
+  padding: 0 clamp(12px, 2.5vw, 24px); 
+  background: var(--surface-white); 
+  border-bottom: 1px solid var(--border-color); 
+  flex-shrink: 0; 
+  position: relative; 
+  z-index: 30; 
+  transition: background-color 0.3s ease, border-color 0.3s ease; 
+}
+
+/* Branding group anchors left */
+.header__left { 
+  display: flex; 
+  align-items: center; 
+  gap: clamp(6px, 1.5vw, 10px); 
+  flex-shrink: 0; 
+}
+
+.header__logo { display: flex; }
+
+.header__brand { 
+  font-size: clamp(13px, 1.5vw, 14px); 
+  font-weight: 700; 
+  color: var(--primary-blue); 
+  letter-spacing: -0.3px; 
+  transition: color 0.3s ease; 
+  
+  /* Hides text brand on ultra-small screens to preserve action space */
+  @media (max-width: 480px) { display: none; }
+}
+
+.header__slash { 
+  color: var(--border-color); 
+  font-size: 16px; 
+  font-weight: 300; 
+  transition: color 0.3s ease; 
+  
+  @media (max-width: 480px) { display: none; }
+}
+
+.header__breadcrumb-btn { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 4px; 
+  font-size: clamp(11px, 1.2vw, 12px); 
+  font-weight: 500; 
+  color: var(--text-muted); 
+  padding: 4px 8px; 
+  border-radius: 6px; 
+  border: 1px solid transparent; 
+  background: transparent; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+  white-space: nowrap;
+}
+
+.header__breadcrumb-btn:hover { 
+  background: var(--bg-tint); 
+  border-color: var(--border-color); 
+  color: var(--text-primary); 
+}
+
+/* Actions group pushes right */
+.header__actions { 
+  display: flex; 
+  align-items: center; 
+  gap: clamp(4px, 1vw, 8px); 
+  flex-shrink: 0; 
+  margin-left: auto; 
+}
+
+/* Micro-typography for utility elements */
+.lang-text { font-size: 13px; font-weight: 700; font-family: monospace; line-height: 1; }
+.theme-icon { font-size: 16px; line-height: 1; }
+
+.header__divider-line { 
+  width: 1px; 
+  height: 20px; 
+  background: var(--border-color); 
+  flex-shrink: 0; 
+  margin: 0 4px; 
+  transition: background-color 0.3s ease; 
+}
+
+/* Responsive adaptation for primary actions on smaller devices */
+@media (max-width: 768px) { 
+  /* Hides only the text label to preserve button functionality as icons */
+  .action-label { display: none; }
+  
+  /* Adapts button padding to icon-only mode to prevent awkward spacing */
+  .btn--sm, .btn--md { 
+    padding: 0; 
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+}

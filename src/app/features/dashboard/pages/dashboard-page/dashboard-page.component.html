@@ -1,0 +1,67 @@
+<!-- Root application boundary ensuring contained scroll behavior on desktop -->
+<div class="app">
+  
+  <!-- Global navigation injecting layout-level triggers via event emitters -->
+  <app-dashboard-header 
+    (openDataViz)="isDrawerOpen.set(true)" 
+    (routeToChat)="navigateToChat()">
+  </app-dashboard-header>
+  
+  <!-- Persistent macro-metrics separated from contextual filters -->
+  <div class="global-kpi-strip">
+    <app-kpi-cards [mode]="'global'"></app-kpi-cards>
+  </div>
+
+  <!-- Primary spatial division between navigation/controls and content -->
+  <div class="layout">
+    <app-filter-sidebar (viewChanged)="currentView.set($event)"></app-filter-sidebar>
+    
+    <!-- Independent scroll region preserving sidebar visibility on wide screens -->
+    <main class="main">
+      <div class="content-wrapper">
+        
+        <div class="page-title">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <span>MCPilot Dashboard</span>
+            <span class="breadcrumb__sep">/</span>
+            <span>{{ store.language() === 'tr' ? 'Çalışma Alanı' : 'Workspace' }}</span>
+            <span class="breadcrumb__sep">/</span>
+            <span class="breadcrumb__active">{{ store.language() === 'tr' ? 'E-Ticaret Analitikleri' : 'E-Commerce Analytics' }}</span>
+          </nav>
+          
+          <h1 class="page-title__heading">
+            @if (store.language() === 'tr') {
+              @switch (currentView()) {
+                @case ('sales') { Satış Performansı }
+                @case ('product') { Ürün Analitikleri }
+                @case ('customer') { Müşteri İçgörüleri }
+              }
+            } @else {
+              @switch (currentView()) {
+                @case ('sales') { Sales Performance }
+                @case ('product') { Product Analytics }
+                @case ('customer') { Customer Insights }
+              }
+            }
+          </h1>
+          <p class="page-title__sub">
+            {{ store.language() === 'tr' ? 'Filtrelenmiş performans metrikleri · Son güncelleme 27 Ağu 2026' : 'Filtered performance metrics · Last updated Aug 27, 2026' }}
+          </p>
+        </div>
+
+        <!-- Contextual rendering delegating specific views to child widgets -->
+        <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
+        <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
+        <app-data-tables [mode]="currentView()"></app-data-tables>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Off-canvas integration preserving layout integrity when invoked -->
+  <app-data-viz-drawer 
+    [isOpen]="isDrawerOpen()" 
+    (closeDrawer)="isDrawerOpen.set(false)">
+  </app-data-viz-drawer>
+  
+</div>

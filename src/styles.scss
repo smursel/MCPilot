@@ -1,65 +1,55 @@
 /* src/styles.scss */
 
 :root {
-  /* Brand Colors - Complementary Palette */
-  --primary-blue: #1E40AF; /* Sophisticated modern navy for trust & analytics */
-  --accent-coral: #FF6B6B; /* Sweet energetic coral for prominent actions */
-  
-  /* Backgrounds */
-  --bg-tint: #F8FAFC; /* Tinted off-white for reduced visual fatigue */
-  --surface-white: #FFFFFF;
-  
-  /* Chat Bubbles */
-  --user-bubble-bg: var(--primary-blue);
-  --user-text: #FFFFFF;
-  
-  /* AI Bubble - High contrast, accessible slate tint */
-  --ai-bubble-bg: #E2E8F0; 
-  --ai-text: #0F172A; 
-  
-  /* Utility */
-  --border-color: #E2E8F0;
-  --text-muted: #64748B;
-  
-  /* EKLENEN: Ana metin rengini değişkene aldık ki karanlık modda ezebilelim ✨ */
-  --text-primary: #333333; 
+  /* %60 - Ana Renk (Dominant Color): Arka planlar için göz yormayan Tinted off-white */
+  /* */
+  --bg-tint: #F8FAFC; 
 
+  /* %30 - İkincil Renk (Secondary Color): Kartlar ve paneller için Pure White */
+  /* */
+  --surface-white: #FFFFFF;
+
+  /* %10 - Vurgu Renkleri (Accent Color): Butonlar ve CTA alanları */
+  /* */
+  --primary-blue: #1E40AF; /* Modern Navy - Ana aksiyonlar */
+  --accent-coral: #FF6B6B; /* Energetic Coral - Bildirimler ve hata durumları */
+
+  /* Neutral Colors (Nötr Renkler) - Tipografik Hiyerarşi İçin */
+  /*, */
+  --text-primary: #333333; /* Ana metinler (High emphasis) */
+  --text-muted: #64748B;   /* Alt başlıklar ve labellar (Medium/Low emphasis) */
+  --border-color: #E2E8F0; /* Kart ayırıcı ince çizgiler */
+
+  /* Interactivity / Utility */
   --focus-border-color: #2563EB;
   --focus-box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-/* EKLENEN: Karanlık Tema (Dark Mode) Renk Paleti 🌙 */
-/* src/styles.scss (Sadece Dark Mode Bloğu) */
-
-/* src/styles.scss (Dark Mode Paleti - High Contrast & Deep Dark) */
-
+/* 
+  DARK MODE ADAPTATION
+  Karanlık temada okunabilirliği (Accessibility) korumak için Hue + Gray (Tones) 
+  ve Hue + Black (Shades) kurallarını uyguluyoruz.
+ ,
+*/
 [data-theme='dark'] {
-  /* 1. Gerçek Derin Dark Zemin (OLED / Slate Black) ✨ */
+  /* %60 - Dominant Arka Plan (Derin OLED Siyah/Slate) */
   --bg-tint: #07090E; 
-  
-  /* 2. Kartlar ve Input Alanı için Tok Koyu Gri/Lacivert */
+
+  /* %30 - İkincil Yüzeyler (Kartlar için kontrast sağlayacak hafif açık ton) */
   --surface-white: #121826;
-  
-  /* 3. Kullanıcı Mesajı: O korkunç alarm mercanı yerine, 
-     karanlıkta parlayan ama göz yormayan tok bir "Electric Blue" veya canlı "Cyber Neon Blue" 
-     ya da istediğin o tok kontrastlı şık bir ton. 
-     (Açık mavi tonu dark modda kullanıcı için en yüksek okunabilirliği verir!) */
-  --user-bubble-bg: #E05A47; 
-  --user-text: #F8FAFC; /* Üzerindeki metin yumuşak bir beyaz/kırık beyaz */
-  
-  /* 4. AI Balonu: Koyu füme/gri, arkasından mükemmel ayrılır */
-  --ai-bubble-bg: #1E293B; 
-  --ai-text: #F1F5F9; 
-  
-  /* 5. Kenarlıklar ve Metinler */
-  --border-color: #1E293B;
-  --text-primary: #F8FAFC;
+
+  /* %10 - Vurgu Renkleri (Karanlıkta parlaması için Tint/Açık tonlar tercih edildi) */
+  --primary-blue: #3B82F6; /* Modern Navy'nin karanlık modda erişilebilir Tint versiyonu */
+  --accent-coral: #E05A47; /* Energetic Coral'ın göz yormayan tok versiyonu */
+
+  /* Tipografi - Karanlık arka planda kontrast (Zıtlık) kuralı */
+  /* */
+  --text-primary: #F8FAFC; /* Tam beyaz yerine Tinted White (göz yormaması için) */
   --text-muted: #94A3B8;
+  --border-color: #1E293B;
 
   --focus-border-color: var(--accent-coral);
   --focus-box-shadow: 0 0 0 3px rgba(224, 90, 71, 0.2);
-  
-  --accent-coral: #E05A47; /* Vurgu rengimiz daha tatlı bir pembe/mercan */
 }
 
 * {
@@ -86,3 +76,54 @@ html, body {
   height: 100%;
   width: 100%;
 }
+
+/* BEM Button System - Figma Adapted */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+
+  &--sm { height: 32px; padding: 0 12px; font-size: 12px; }
+  &--md { height: 36px; padding: 0 14px; font-size: 13px; }
+  &--icon { width: 32px; height: 32px; padding: 0; justify-content: center; }
+  
+  &--primary {
+    background: var(--primary-blue);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25);
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 12px rgba(30, 64, 175, 0.35);
+      filter: brightness(1.1);
+    }
+  }
+
+  &--outline {
+    color: var(--primary-blue);
+    border: 1.5px solid var(--primary-blue);
+    &:hover { background: rgba(30, 64, 175, 0.05); }
+  }
+
+  &--ghost {
+    color: var(--text-muted);
+    &:hover {
+      background: var(--bg-tint);
+      color: var(--text-primary);
+    }
+  }
+
+  &--full { width: 100%; justify-content: center; height: 38px; font-size: 13px; }
+}
+
+.badge--vip { background: rgba(30,64,175,0.08); color: var(--primary-blue); border-color: rgba(30,64,175,0.2); }
+.badge--loyal { background: rgba(16,185,129,0.08); color: #10B981; border-color: rgba(16,185,129,0.2); }
+.badge--standard { background: var(--bg-tint); color: var(--text-muted); border-color: var(--border-color); }

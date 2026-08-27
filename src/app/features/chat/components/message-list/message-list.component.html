@@ -10,8 +10,10 @@
         <line x1="6" y1="20" x2="6" y2="14"></line>
       </svg>
     </div>
-    <h1 class="hero-title">Veri Analizine Hazırım</h1>
-    <p class="hero-subtitle">E-ticaret metriklerini, satış trendlerini ve müşteri verilerini doğal dil ile analiz etmek için bana bir soru sorun.</p>
+    <h1 class="hero-title">{{ store.language() === 'tr' ? 'Veri Analizine Hazırım' : 'Ready for Data Analysis' }}</h1>
+    <p class="hero-subtitle">{{ store.language() === 'tr' 
+          ? 'E-ticaret metriklerini, satış trendlerini ve müşteri verilerini doğal dil ile analiz etmek için bana bir soru sorun.' 
+          : 'Ask me a question to analyze e-commerce metrics, sales trends, and customer data using natural language.' }}</p>
   </div>
 
   <!-- -- Iterates through chat history when messages exist -->

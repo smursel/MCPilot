@@ -1,9 +1,80 @@
+/* --- SOL ÜST MENÜ GRUBU (Spesifik Taşıyıcı) --- */
+.top-actions {
+  position: absolute; 
+  top: clamp(16px, 2.5vh, 24px);
+  left: clamp(16px, 2.5vw, 24px); 
+  z-index: 1000; 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start; 
+}
+
+/* Ortak buton stillerimiz */
+.icon-btn {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important; 
+  min-height: 44px !important; 
+  flex-shrink: 0 !important;  
+  padding: 0;
+  
+  border-radius: 50%;
+  background: var(--surface-white);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* İkonun Vurgu Rengi (Aydınlık Mod Default) */
+  .vurgu-icon {
+    color: var(--primary-blue);
+    transition: color 0.3s ease;
+  }
+
+  /* Emoji boyutunu sabitliyoruz ki büzüşmesin */
+  span {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    .vurgu-icon {
+      color: var(--accent-coral);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.95);
+  }
+}
+
+/* Karanlık Modda İkon Rengi Değişimi */
+:host-context([data-theme='dark']) .vurgu-icon {
+  color: var(--accent-coral);
+}
+
+/* --- FLUID & RESPONSIVE CHAT PAGE LAYOUT --- */
+:host {
+  display: block;
+  height: 100vh;
+  height: 100dvh; /* Dinamik viewport yüksekliği (mobil tarayıcılar için hayat kurtarır) */
+  width: 100vw;
+  background-color: var(--bg-tint);
+  transition: background-color 0.3s ease; /* Tema geçişini yumuşatır */
+}
+
 .chat-page {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background-color: #fafafa;
 }
 
 .chat-container {
@@ -21,6 +92,7 @@ app-message-list {
 /* input bileşeni - ezilmesini önleyerek en alta sabitleme */
 app-message-input {
   flex-shrink: 0; 
+  width: 100%;
 }
 
 .no-session {
@@ -28,40 +100,6 @@ app-message-input {
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: 16px;
-  color: #666;
-}
-
-/* tema değiştirme butonu - sol üst köşe konumlandırma ve efektler */
-.theme-toggle-btn {
-  position: absolute; 
-  top: 24px;
-  left: 24px; 
-  z-index: 1000; 
-  
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  
-  background: var(--surface-white);
-  border: 1px solid rgba(148, 163, 184, 0.4); 
-  color: var(--text-primary);
-  
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  &:active {
-    transform: translateY(0) scale(0.95);
-  }
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: var(--text-muted);
 }

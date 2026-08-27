@@ -1,6 +1,15 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./features/dashboard/pages/dashboard-page/dashboard-page.component').then(
+        (m) => m.DashboardPageComponent,
+      ),
+  },
+  
   {
     path: 'chat',
     loadComponent: () =>
@@ -8,9 +17,11 @@ export const routes: Routes = [
         (m) => m.ChatPageComponent,
       ),
   },
+  
   {
     path: '',
-    redirectTo: 'chat',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
+  
 ];
