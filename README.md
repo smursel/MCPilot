@@ -51,3 +51,9 @@ src/app/
 `ApiService` şu an sahte cevap üretiyor. .NET API hazır olduğunda değişecek tek yer orası —
 `getSessions`, `createSession`, `sendMessage` metotları `HttpClient` çağrılarına dönüşecek.
 Store ve bileşenler etkilenmez.
+
+## Dağıtım
+
+Uygulama `lintechtests.online/mcpilot` alt yolunda yayınlanıyor. Build ayarı `angular.json`
+içindeki `production.baseHref` ile yapılmış durumda; sunucu tarafı SPA fallback yapılandırması
+ve kopyalama adımları için [deploy/README.md](deploy/README.md).

@@ -65,7 +65,8 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/mcpilot/"
             },
             "development": {
               "optimization": false,
