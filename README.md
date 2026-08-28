@@ -54,6 +54,6 @@ Store ve bileşenler etkilenmez.
 
 ## Dağıtım
 
-Uygulama `lintechtests.online/mcpilot` alt yolunda yayınlanıyor. Build ayarı `angular.json`
-içindeki `production.baseHref` ile yapılmış durumda; sunucu tarafı SPA fallback yapılandırması
-ve kopyalama adımları için [deploy/README.md](deploy/README.md).
+Uygulama https://lintechtests.online/mcpilot/ adresinde yayında. Build ayarı `angular.json`
+içindeki `production.baseHref` ile yapılmış durumda; sunucu bilgileri, yeni sürüm çıkma adımları
+ve doğrulama komutları için [deploy/README.md](deploy/README.md).
