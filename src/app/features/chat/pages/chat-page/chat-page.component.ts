@@ -33,14 +33,40 @@ export class ChatPageComponent implements OnInit {
 
   ngOnInit(): void {
     // aktif oturum yoksa başlangıç oturumlarını API üzerinden yükleme
-    if (!this.store.currentSessionId()) {
-      this.api.getSessions().subscribe((sessions) => {
-        if (sessions.length > 0) {
-          this.store.loadSessions(sessions);
-          this.store.selectSession(sessions[0].id);
-        }
-      });
+    if (this.store.currentSessionId()) {
+      return;
     }
+
+    this.store.setLoading(true);
+    this.api.getSessions().subscribe({
+      next: (sessions) => {
+        this.store.loadSessions(sessions);
+
+        if (sessions.length > 0) {
+          this.store.selectSession(sessions[0].id);
+          this.store.setLoading(false);
+        } else {
+          // hiç oturum yoksa kullanıcıyı boş ekranda bırakmamak için ilkini biz açarız
+          this.createFirstSession();
+        }
+      },
+      error: (err) => this.failStartup(err, 'Oturumlar yüklenemedi'),
+    });
+  }
+
+  private createFirstSession(): void {
+    this.api.createSession('Yeni Sohbet').subscribe({
+      next: (session) => {
+        this.store.createSession(session);
+        this.store.setLoading(false);
+      },
+      error: (err) => this.failStartup(err, 'Yeni oturum oluşturulamadı'),
+    });
+  }
+
+  private failStartup(err: unknown, fallback: string): void {
+    this.store.setError(err instanceof Error ? err.message : fallback);
+    this.store.setLoading(false);
   }
 
   // tema değiştirme buton tetikleyicisi - store üzerindeki temayı tersine çevirir

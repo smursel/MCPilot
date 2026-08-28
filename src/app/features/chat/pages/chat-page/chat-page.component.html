@@ -10,7 +10,12 @@
     <app-message-list />
     <app-message-input />
   </div>
+  <!-- oturum yokken üç durum ayrı ayrı gösterilir: yükleniyor, hata, boş -->
   <ng-template #noSession>
-    <div class="no-session">Sohbet yükleniyor...</div>
+    <div class="no-session" *ngIf="store.isLoading()">Sohbet yükleniyor...</div>
+    <div class="no-session no-session--error" *ngIf="!store.isLoading() && store.error()" role="alert">
+      {{ store.error() }}
+    </div>
+    <div class="no-session" *ngIf="!store.isLoading() && !store.error()">Sohbet bulunamadı</div>
   </ng-template>
 </div>
