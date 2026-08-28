@@ -88,10 +88,48 @@ için ayrı bir `location` bloğuyla `=404` verdirilebilir.
 
 ## Backend bağlanınca
 
-`.NET API` devreye girdiğinde dikkat: `ApiService` içinde **göreli** yol kullanılırsa
-(`api/chat` gibi) `baseHref` yüzünden istek `/mcpilot/api/chat` adresine gider. API farklı bir
-kök altındaysa (`/api/...`) tam yol verilmeli.
+.NET API `lintechtests.online/mcpilot/api` altında yayınlanacak.
 
-Not: bu alan adında `/api/` yolu **zaten CRM'in FastAPI backend'ine** proxy'leniyor
-(`127.0.0.1:8000`). MCPilot'ın backend'i için çakışmayan bir yol seçilmeli —
-`/mcpilot-api/` gibi.
+### Nginx'e eklenmesi gereken blok
+
+Şu an `/mcpilot/api/...` adresine giden istekler `location /mcpilot/` bloğunun `try_files`
+fallback'ine takılıp **200 + index.html** dönüyor. Hata 404 değil 200 olduğu için frontend
+isteği başarılı sanıp HTML'i JSON diye parse etmeye çalışır — hata ayıklaması yanıltıcıdır.
+
+Çözüm daha spesifik bir location; nginx'te en uzun önek kazanır:
+
+```nginx
+location /mcpilot/api/ {
+    proxy_pass http://127.0.0.1:PORT/;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+`proxy_pass` sonundaki slash `/mcpilot/api/` önekini kırpar: `/mcpilot/api/chat` isteği
+backend'e `/chat` olarak ulaşır. .NET controller yolları `/api/chat` biçimindeyse
+`proxy_pass http://127.0.0.1:PORT/api/;` yazılmalı.
+
+Bu sunucuda **5210** ve **8000** portları dolu (Kayhos API ve CRM'in FastAPI'si).
+
+### Frontend tarafı
+
+`<base href="/mcpilot/">` sayesinde göreli yollar kendiliğinden doğru çözülüyor:
+
+```ts
+this.http.get('api/chat')    // -> /mcpilot/api/chat   doğru
+this.http.get('/api/chat')   // -> /api/chat           YANLIŞ: CRM'in FastAPI'sine gider
+```
+
+Baştaki slash kritik. Slash'lı yazarsan istek alan adının kökünden başlar ve bu alan adında
+`/api/` zaten CRM backend'ine (`127.0.0.1:8000`) proxy'lenmiş durumdadır.
+
+### Dev ortamı
+
+`npm start` sırasında base href `/` olduğu için `api/chat` isteği `localhost:4200/api/chat`
+adresine gider ve karşılığı yoktur. Local'de .NET çalıştırırken `proxy.conf.json` ile
+yönlendirme kurulmalı.
