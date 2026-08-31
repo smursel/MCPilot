@@ -37,6 +37,23 @@ export class ChatPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.facade.init();
+this.facade.init();
+  }
+
+  // tema değiştirme buton tetikleyicisi - store üzerindeki temayı tersine çevirir
+  toggleTheme(): void {
+    const currentTheme = this.store.theme();
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    this.store.setTheme(newTheme); 
+  }
+
+  goBack(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
+  toggleLanguage(): void {
+    const newLang = this.store.language() === 'tr' ? 'en' : 'tr';
+    this.store.setLanguage(newLang);
+  }
   }
 }

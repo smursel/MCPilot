@@ -28,5 +28,23 @@
 
     <app-message-list />
     <app-message-input />
-  </main>
+</div>
+  
+  <!-- oturum yokken üç durum ayrı ayrı gösterilir: yükleniyor, hata, boş -->
+  <ng-template #noSession>
+    <!-- Yüklenme Durumu (Dil Destekli) -->
+    <div class="no-session" *ngIf="store.isLoading()">
+      {{ store.language() === 'tr' ? 'Sohbet yükleniyor...' : 'Loading chat...' }}
+    </div>
+    
+    <!-- Hata Durumu (API'den gelen hatayı basar) -->
+    <div class="no-session no-session--error" *ngIf="!store.isLoading() && store.error()" role="alert">
+      {{ store.error() }}
+    </div>
+    
+    <!-- Boş Durum (Dil Destekli) -->
+    <div class="no-session" *ngIf="!store.isLoading() && !store.error()">
+      {{ store.language() === 'tr' ? 'Sohbet bulunamadı' : 'Chat not found' }}
+    </div>
+  </ng-template>
 </div>

@@ -64,3 +64,16 @@ app-model-selector {
     font-size: 13.5px;
   }
 }
+
+.no-session {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: var(--text-muted);
+
+  &--error {
+    color: var(--accent-coral);
+  }
+}
