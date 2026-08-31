@@ -1,6 +1,6 @@
 # MCPilot — Frontend
 
-Angular ile yazılmış sohbet arayüzü. Yalnızca frontend; iş mantığı ayrı bir
+Angular ile yazılmış sohbet ve analiz arayüzü. Yalnızca frontend; iş mantığı ayrı bir
 **.NET Core API**'de yaşıyor.
 
 ```
@@ -30,13 +30,29 @@ src/app/
 │   ├── models.ts          ChatMessage, ChatSession, ChatRole, MessageStatus
 │   ├── api.service.ts     backend çağrıları (şu an mock)
 │   └── app.store.ts       signal tabanlı durum: oturumlar, mesajlar, UI
-└── features/chat/
-    ├── pages/chat-page/
-    └── components/
-        ├── message-list/
-        ├── message-item/
-        └── message-input/
+└── features/
+    ├── chat/               # Ana Sohbet Arayüzü
+    │   ├── pages/chat-page/
+    │   └── components/
+    │       ├── message-list/
+    │       ├── message-item/
+    │       └── message-input/
+    └── dashboard/          # E-Ticaret Analiz Dashboard'u
+        ├── pages/dashboard-page/
+        ├── services/dashboard.service.ts
+        └── components/
+            ├── dashboard-header/    # Global navigasyon ve tema/dil ayarları
+            ├── filter-sidebar/      # Fluid & responsive filtreleme merkezi
+            ├── kpi-cards/           # auto-fit grid metrik kartları
+            ├── chart-placeholders/  # CSS/SVG tabanlı grafik mockup'ları
+            ├── data-tables/         # Detaylı veri tabloları
+            └── data-viz-drawer/     # Slide-out AI analiz asistanı
 ```
+##Dashboard & UX Mimarisi
+- **100% Fluid & Responsive Tasarım:** CSS Grid, clamp() ve minmax() kullanılarak ekran boyutundan bağımsız (mobil, tablet, desktop) kırılmayan akışkan mizanpaj tasarlandı. Hardcode edilmiş, ekranı bozan breakpoint'ler yerine içeriğe göre esneyen bir yapı kuruldu.
+- **Data-Viz Drawer (AI Asistan):** Chat modülleri DRY prensibiyle Dashboard içine entegre edildi. Kullanıcılar bağlamdan kopmadan, ekranı işgal etmeyen sağdan açılır bir panel (overlay) üzerinden doğal dil ile veri analizi yapabilir.
+- **Tema ve Çoklu Dil:** Angular Signals kullanılarak anlık çalışan, sayfa yenileme veya ekstra yükleme gerektirmeyen Karanlık/Aydınlık mod ve EN/TR dil desteği eklendi.
+- **Mobil Optimizasyonu (Floating UI):** Dar ekranlarda asıl içeriği (grafikleri) aşağı iten filtreler yerine, ekranda yer kaplamayan "Floating Accordion" ve "Overlay" (Yüzen Açılır Menü) tarzı filtreleme panelleri kurgulandı.
 
 ## Konvansiyonlar
 

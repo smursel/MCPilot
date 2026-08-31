@@ -1,0 +1,101 @@
+/* 
+ * Replaces rigid flexbox with CSS Grid to automatically handle side-by-side vs stacked layouts.
+ * Prevents forced compression that causes unwanted horizontal scrollbars on desktop.
+ */
+.tables-section { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(clamp(320px, 40vw, 500px), 1fr)); 
+  gap: 16px; 
+  padding-bottom: 24px; 
+}
+
+/* Base card styling ensuring a consistent footprint regardless of data volume */
+.table-card { 
+  background: var(--surface-white); 
+  border: 1px solid var(--border-color); 
+  border-radius: 12px; 
+  overflow: hidden; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); 
+  display: flex;
+  flex-direction: column;
+}
+
+.table-card__header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 14px 16px; 
+  border-bottom: 1px solid var(--border-color); 
+}
+
+.table-card__title { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  font-size: clamp(12px, 1.5vw, 13px); 
+  font-weight: 600; 
+  color: var(--text-primary); 
+}
+
+/* Fallback for ultra-small viewports to ensure table remains accessible without breaking the container */
+.table-scroll { 
+  overflow-x: auto; 
+  width: 100%;
+}
+
+.data-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  font-size: 12px; 
+}
+
+/* 
+ * Removed 'white-space: nowrap' to allow headers to wrap naturally on medium screens.
+ * This prevents the table from expanding artificially and triggering scrollbars.
+ */
+.data-table th { 
+  padding: 12px 16px; 
+  text-align: left; 
+  font-size: 10px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.05em; 
+  color: var(--text-muted); 
+  border-bottom: 1px solid var(--border-color); 
+}
+
+.data-table td { 
+  padding: 12px 16px; 
+  border-bottom: 1px solid var(--border-color); 
+  vertical-align: middle; 
+}
+
+/* Interactive row feedback */
+.data-table tbody tr:hover td { background: var(--bg-tint); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+.th--right { text-align: right !important; }
+.th--center { text-align: center !important; }
+
+/* Structural alignments and typography */
+.td--rank { font-family: monospace; font-size: 12px; color: var(--text-muted); width: 32px; text-align: center; }
+.td--mono { font-family: monospace; font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.td--revenue { text-align: right; font-family: monospace; font-size: 13px; font-weight: 600; color: var(--primary-blue); }
+
+.td-name { font-weight: 600; color: var(--text-primary); font-size: 13px; line-height: 1.3; }
+.td-cat { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Loyalty Score Bar visual representation */
+.score-bar { display: flex; align-items: center; gap: 8px; }
+.score-bar__track { width: 48px; height: 6px; background: var(--border-color); border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+.score-bar__fill { height: 100%; background: var(--primary-blue); border-radius: 99px; transition: width 0.5s ease-out; }
+.score-bar__value { font-family: monospace; font-size: 12px; font-weight: 600; color: var(--primary-blue); }
+
+/* SQL-Mapped Segment Badges */
+.badge { display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 600; border: 1px solid var(--border-color); margin-top: 6px; }
+.badge--vip { background: rgba(30,64,175,0.08); color: var(--primary-blue); border-color: rgba(30,64,175,0.2); }
+.badge--loyal { background: rgba(16,185,129,0.08); color: #10B981; border-color: rgba(16,185,129,0.2); }
+.badge--standard { background: var(--bg-tint); color: var(--text-muted); border-color: var(--border-color); }
+
+.btn--icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; cursor: pointer; color: var(--text-muted); transition: background-color 0.2s, color 0.2s; }
+.btn--icon:hover { background: var(--bg-tint); color: var(--text-primary); }

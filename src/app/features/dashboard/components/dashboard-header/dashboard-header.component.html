@@ -1,0 +1,55 @@
+<!-- Semantic header serving as the global control center -->
+<header class="header">
+  
+  <!-- Identity and contextual location -->
+  <div class="header__left">
+    <div class="header__logo" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="7" fill="var(--primary-blue)"/>
+        <rect x="7" y="7" width="6" height="6" rx="1.5" fill="white"/>
+        <rect x="15" y="7" width="6" height="6" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+        <rect x="7" y="15" width="6" height="6" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+        <rect x="15" y="15" width="6" height="6" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+      </svg>
+    </div>
+    
+    <span class="header__brand">MCPilot</span>
+    <span class="header__slash">/</span>
+    
+    <button class="header__breadcrumb-btn" aria-label="Select Workspace">
+      {{ store.language() === 'tr' ? 'E-Ticaret' : 'E-Commerce' }}
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Global utilities and analytical triggers -->
+  <div class="header__actions">
+    
+    <!-- Localization trigger -->
+    <button class="btn btn--icon btn--ghost" (click)="toggleLanguage()" aria-label="Toggle Language" title="Change Language">
+      <span class="lang-text">
+        {{ store.language() === 'tr' ? 'EN' : 'TR' }}
+      </span>
+    </button>
+
+    <!-- Theme trigger -->
+    <button class="btn btn--icon btn--ghost" (click)="toggleTheme()" aria-label="Toggle Theme" title="Change Theme">
+      <span *ngIf="store.theme() === 'light'" class="theme-icon">🌙</span>
+      <span *ngIf="store.theme() === 'dark'" class="theme-icon">☀️</span>
+    </button>
+
+    <div class="header__divider-line"></div>
+    
+    <!-- Secondary analytical action. Spans handle text visibility across breakpoints -->
+    <button class="btn btn--outline btn--sm" (click)="onAskCopilot()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+      <span class="action-label">{{ store.language() === 'tr' ? 'AI' : 'AI' }}<!--{{ store.language() === 'tr' ? 'AI ile Görselleştir' : 'Visualize Data with AI' }}--></span>
+    </button>
+    
+    <!-- Primary analytical action -->
+    <button class="btn btn--primary btn--md" (click)="onAnalyzeData()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg>
+      <span class="action-label">{{ store.language() === 'tr' ? 'MCPilot ile Analiz Et' : 'Ask MCPilot to Analyze' }}</span>
+    </button>
+  </div>
+</header>

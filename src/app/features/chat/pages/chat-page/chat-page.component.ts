@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AppStore } from '@core/app.store';
 import { ApiService } from '@core/api.service';
 import { MessageListComponent } from '../../components/message-list/message-list.component';
@@ -16,6 +17,7 @@ export class ChatPageComponent implements OnInit {
   // html şablonundan erişim için store public tutulur
   store = inject(AppStore); 
   private api = inject(ApiService);
+  private router = inject(Router);
 
   currentSession = this.store.currentSession;
 
@@ -74,5 +76,14 @@ export class ChatPageComponent implements OnInit {
     const currentTheme = this.store.theme();
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     this.store.setTheme(newTheme); 
+  }
+
+  goBack(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
+  toggleLanguage(): void {
+    const newLang = this.store.language() === 'tr' ? 'en' : 'tr';
+    this.store.setLanguage(newLang);
   }
 }

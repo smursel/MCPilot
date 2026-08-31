@@ -1,0 +1,116 @@
+/* 
+ * Utilizes dynamic viewport height (dvh) to avoid clipping 
+ * caused by mobile browser address bars. Reverts to natural 
+ * document scrolling on restricted viewports.
+ */
+:host { 
+  display: block; 
+  height: 100vh; 
+  height: 100dvh; 
+  width: 100vw; 
+  overflow: hidden;
+
+  @media (max-width: 900px) {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+}
+
+.app { 
+  display: flex; 
+  flex-direction: column; 
+  height: 100%; 
+  overflow: hidden; 
+  background: var(--bg-tint); 
+
+  @media (max-width: 900px) {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+}
+
+/* 
+ * Defines flexible padding via clamp to maintain visual 
+ * proportion across ultra-wide and narrow displays.
+ */
+.global-kpi-strip {
+  padding: clamp(12px, 1.5vw, 20px) clamp(16px, 2vw, 24px);
+  background: var(--surface-white);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  z-index: 20; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+/* 
+ * Transitions from a side-by-side flex layout to a vertical stack 
+ * ensuring controls don't crush the data visualization area.
+ */
+.layout { 
+  display: flex; 
+  flex-direction: row; 
+  flex: 1; 
+  overflow: hidden; 
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    flex: none;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.main { 
+  flex: 1; 
+  overflow-y: auto; 
+  background: var(--bg-tint); 
+
+  @media (max-width: 900px) {
+    flex: none;
+    height: auto;
+    overflow: visible;
+    width: 100%;
+  }
+}
+
+.content-wrapper { 
+  padding: clamp(16px, 2.5vw, 24px); 
+  display: flex; 
+  flex-direction: column; 
+  gap: clamp(16px, 2vw, 24px); 
+  max-width: 1440px; 
+  margin: 0 auto; 
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+/* Typographic hierarchy definitions */
+.breadcrumb { 
+  display: flex; 
+  align-items: center; 
+  flex-wrap: wrap;
+  gap: 5px; 
+  font-size: 11px; 
+  color: var(--text-muted); 
+  margin-bottom: 8px; 
+}
+
+.breadcrumb__sep { color: var(--border-color); }
+.breadcrumb__active { color: var(--text-primary); font-weight: 500; }
+
+.page-title__heading { 
+  font-size: clamp(20px, 2.5vw, 24px); 
+  font-weight: 700; 
+  color: var(--text-primary); 
+  letter-spacing: -0.5px; 
+  line-height: 1.2; 
+  margin: 0; 
+}
+
+.page-title__sub { 
+  font-size: 12px; 
+  color: var(--text-muted); 
+  margin-top: 4px; 
+}

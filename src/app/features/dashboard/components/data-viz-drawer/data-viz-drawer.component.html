@@ -1,0 +1,43 @@
+<!-- Transparent backdrop traps clicks to natively dismiss the overlay without explicit button targeting -->
+<div 
+  class="panel-backdrop" 
+  [class.is-visible]="isOpen" 
+  (click)="onClose()"
+  aria-hidden="true">
+</div>
+
+<!-- Off-canvas architecture ensures the AI context does not permanently consume layout width -->
+<aside 
+  class="panel panel--dataviz" 
+  [class.is-open]="isOpen"
+  aria-label="Data Visualization AI Panel">
+  
+  <!-- Branded header establishes context and anchors the primary dismiss action -->
+  <div class="panel__header">
+    <div class="panel__header-inner">
+      <div class="panel__icon-wrap">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="5" width="2.5" height="8" rx="0.75" fill="white"/>
+          <rect x="5.75" y="3" width="2.5" height="10" rx="0.75" fill="white"/>
+          <rect x="10.5" y="1" width="2.5" height="12" rx="0.75" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="panel__title">Data Visualization AI</h2>
+        <p class="panel__subtitle">On-the-fly chart generation & Insights</p>
+      </div>
+    </div>
+    
+    <button class="panel__close" (click)="onClose()" aria-label="Close DataViz Panel">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 2L12 12M12 2L2 12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Composes existing chat modules to enforce DRY principles and maintain behavioral consistency -->
+  <div class="panel__chat-integration">
+    <app-message-list class="chat-list-wrapper"></app-message-list>
+    <app-message-input class="chat-input-wrapper"></app-message-input>
+  </div>
+</aside>

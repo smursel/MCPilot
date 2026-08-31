@@ -6,7 +6,7 @@
       name="messageInput"
       [(ngModel)]="text"
       (keydown.enter)="handleEnter($event)"
-      placeholder="Mesajını yaz..."
+      placeholder="{{ store.language() === 'tr' ? 'Mesajını yaz...' : 'Type your message...' }}"
       [disabled]="store.isLoading()"
       aria-label="Chat message input"
       rows="1"
