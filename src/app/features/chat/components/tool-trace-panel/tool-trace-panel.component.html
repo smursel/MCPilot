@@ -1,0 +1,51 @@
+<div class="trace-panel">
+  <button type="button" class="trace-toggle" (click)="toggle()" [attr.aria-expanded]="open()">
+    <span class="chevron" [class.open]="open()">›</span>
+    <span>Veri kaynağı</span>
+    <span class="count">{{ traces().length }} araç çağrısı</span>
+  </button>
+
+  @if (open()) {
+    <div class="trace-body">
+      @for (trace of traces(); track trace.id) {
+        <div class="trace" [class.failed]="!trace.success">
+          <button type="button" class="trace-head" (click)="toggleTrace(trace.id)">
+            <span class="status" [class.ok]="trace.success">{{ trace.success ? '✓' : '✕' }}</span>
+            <code class="tool-name">{{ trace.tool }}</code>
+            <span class="server">{{ trace.server }}</span>
+            <span class="duration">{{ duration(trace.durationMs) }}</span>
+            <span class="chevron small" [class.open]="isExpanded(trace.id)">›</span>
+          </button>
+
+          @if (isExpanded(trace.id)) {
+            <div class="trace-detail">
+              @if (sql(trace); as query) {
+                <div class="block">
+                  <span class="label">SQL</span>
+                  <pre class="sql">{{ query }}</pre>
+                </div>
+              } @else {
+                <div class="block">
+                  <span class="label">Argümanlar</span>
+                  <pre>{{ formatArguments(trace.arguments) }}</pre>
+                </div>
+              }
+
+              @if (trace.structuredResult) {
+                <div class="block">
+                  <span class="label">Sonuç</span>
+                  <app-result-table [data]="trace.structuredResult" />
+                </div>
+              } @else if (trace.result) {
+                <div class="block">
+                  <span class="label">Sonuç</span>
+                  <pre>{{ trace.result }}</pre>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

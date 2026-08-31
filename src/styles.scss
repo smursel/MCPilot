@@ -23,6 +23,15 @@
   /* Interactivity / Utility */
   --focus-border-color: #2563EB;
   --focus-box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+
+  --sidebar-bg: #F1F5F9;
+  --hover-bg: rgba(15, 23, 42, 0.05);
+  --code-bg: rgba(15, 23, 42, 0.06);
+  --table-head-bg: rgba(15, 23, 42, 0.04);
+  --user-bubble-bg: var(--primary-blue);
+  --user-text: #FFFFFF;
+  --ai-bubble-bg: #E2E8F0;
+  --ai-text: #0F172A;
 }
 
 /* 
@@ -50,6 +59,15 @@
 
   --focus-border-color: var(--accent-coral);
   --focus-box-shadow: 0 0 0 3px rgba(224, 90, 71, 0.2);
+
+  --sidebar-bg: #0C111C;
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --code-bg: rgba(255, 255, 255, 0.07);
+  --table-head-bg: rgba(255, 255, 255, 0.05);
+  --user-bubble-bg: #2547B8;
+  --user-text: #FFFFFF;
+  --ai-bubble-bg: #1B2334;
+  --ai-text: #E6EAF2;
 }
 
 * {

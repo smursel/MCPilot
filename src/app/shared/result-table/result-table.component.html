@@ -1,0 +1,25 @@
+@if (table(); as t) {
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          @for (column of t.columns; track column) {
+            <th>{{ column }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of t.rows; track $index) {
+          <tr>
+            @for (column of t.columns; track column) {
+              <td>{{ cell(row, column) }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="row-count">{{ t.rows.length }} satır</p>
+} @else {
+  <pre class="raw">{{ raw() }}</pre>
+}

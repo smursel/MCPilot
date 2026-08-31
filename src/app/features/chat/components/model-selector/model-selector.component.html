@@ -1,0 +1,32 @@
+@if (store.model(); as model) {
+  <div class="model-selector">
+    <div class="select-row">
+      <label class="select-wrap" title="Bu ayar tüm kullanıcıları etkiler">
+        <span class="sr-only">Model seç</span>
+        <select [value]="selectedValue()" (change)="onChange($event)">
+          @for (group of groups(); track group.provider) {
+            <optgroup [label]="group.label">
+              @for (name of group.models; track name) {
+                <option [value]="group.provider + '|' + name">{{ name }}</option>
+              }
+            </optgroup>
+          }
+        </select>
+      </label>
+
+      <span class="global-hint" title="Bu ayar tüm kullanıcıları etkiler">sunucu geneli</span>
+    </div>
+
+    @if (!model.configured) {
+      <p class="warn danger" role="alert">
+        Bu sağlayıcının API anahtarı sunucuda tanımlı değil — sohbet çalışmaz.
+      </p>
+    }
+
+    @if (!model.supportsTools) {
+      <p class="warn caution">
+        Bu model araç çağırmayı desteklemiyor; veritabanına erişemez.
+      </p>
+    }
+  </div>
+}
