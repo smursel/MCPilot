@@ -43,10 +43,12 @@ export class FilterSidebarComponent {
   }
 
   /**
-   * Closes the mobile accordion after applying filters to immediately reveal dashboard updates.
+   * Closes the mobile accordion and actively dispatches the current date configuration 
+   * to force a dashboard refresh.
    */
   applyFilters(): void {
     this.isMobileOpen.set(false);
+    this.emitDateChange(); // Explicitly trigger the data load with current selections
   }
 
   onViewChange(view: DashboardView): void {

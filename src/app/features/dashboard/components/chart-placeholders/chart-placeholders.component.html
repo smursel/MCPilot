@@ -22,17 +22,28 @@
         <!-- SVG format chosen to guarantee crisp rendering without pixelation across all DPIs -->
         <div class="chart-content">
           <svg class="w-full h-full" viewBox="0 0 500 160" preserveAspectRatio="none">
-            <path d="M 0,130 Q 70,110 140,95 T 280,60 T 420,30 L 500,15" fill="none" stroke="var(--primary-blue)" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M 0,145 Q 70,135 140,120 T 280,95 T 420,70 L 500,55" fill="none" stroke="#10B981" stroke-width="2.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+            <!-- Çizgiler -->
+            <path [attr.d]="svgPaths().revenue" fill="none" stroke="#1E40AF" stroke-width="2.5" stroke-linecap="round"/>
+            <path [attr.d]="svgPaths().profit" fill="none" stroke="#10B981" stroke-width="2.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+            
+            <!-- Etkileşimli (Hover) Noktalar ve Figma Tarzı Native Tooltipler -->
+            @for (pt of svgPaths().points; track pt.month) {
+              <!-- Ciro Noktaları -->
+              <circle [attr.cx]="pt.x" [attr.cy]="pt.yRev" r="4" fill="#1E40AF" class="chart-point">
+                <title>{{pt.month}} Ciro: ${{pt.rev | number}}</title>
+              </circle>
+              <!-- Kar Noktaları -->
+              <circle [attr.cx]="pt.x" [attr.cy]="pt.yProf" r="4" fill="#10B981" class="chart-point">
+                <title>{{pt.month}} Kar: ${{pt.prof | number}}</title>
+              </circle>
+            }
           </svg>
         </div>
         
-        <!-- Localized X-axis plotting -->
+        <!-- Dinamic X-axis plotting -->
         <div class="chart-axis-x">
-          @if (store.language() === 'tr') {
-            <span>Oca</span><span>Şub</span><span>Mar</span><span>Nis</span><span>May</span><span>Haz</span><span>Tem</span><span>Ağu</span>
-          } @else {
-            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+          @for (month of dashboardService.monthlySales(); track month.month) {
+            <span>{{ month.month }}</span>
           }
         </div>
       </div>
@@ -58,8 +69,10 @@
       
       <div class="chart-donut-layout">
         <!-- Pure CSS mockup ring to bypass JS overhead -->
-        <div class="donut-mockup" style="border-top-color: #10B981; border-right-color: #0EA5E9; border-bottom-color: #F59E0B;">
-          <span class="donut-center-text">100%</span>
+        <div class="donut-mockup" [style.background]="categoryDonutStyle()">
+          <div class="donut-inner">
+            <span class="donut-center-text">100%</span>
+          </div>
         </div>
         
         <!-- Reactive list iterating directly from the state service -->
@@ -120,8 +133,10 @@
       </div>
       
       <div class="chart-donut-layout">
-        <div class="donut-mockup" style="border-top-color: #0EA5E9; border-right-color: #F59E0B; border-bottom-color: #10B981;">
-          <span class="donut-center-text">{{ store.language() === 'tr' ? 'Segmentler' : 'Segments' }}</span>
+        <div class="donut-mockup" [style.background]="segmentDonutStyle()">
+          <div class="donut-inner">
+            <span class="donut-center-text">{{ store.language() === 'tr' ? 'Segmentler' : 'Segments' }}</span>
+          </div>
         </div>
         
         <div class="donut-legend-list">

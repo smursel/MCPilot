@@ -71,6 +71,15 @@
 .chart-legend { display: flex; align-items: center; gap: 24px; font-size: 11px; color: var(--text-muted); padding-top: 12px; border-top: 1px solid var(--border-color); }
 .chart-legend--center { justify-content: center; }
 
+.chart-point {
+  cursor: pointer;
+  transition: r 0.2s ease, filter 0.2s ease;
+  &:hover {
+    r: 7; /* Üzerine gelince noktayı büyüt */
+    filter: brightness(1.2);
+  }
+}
+
 /* Donut Chart Module */
 .chart-donut-layout { 
   display: flex; 
@@ -85,17 +94,31 @@
   }
 }
 
-.donut-mockup { 
-  position: relative; 
-  width: clamp(100px, 30vw, 140px); 
-  height: clamp(100px, 30vw, 140px); 
-  border-radius: 50%; 
-  border: 16px solid var(--primary-blue); 
-  flex-shrink: 0; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); 
+/* Donut Chart Module */
+.donut-mockup {
+  position: relative;
+  width: clamp(100px, 30vw, 140px);
+  height: clamp(100px, 30vw, 140px);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  /* Border'ı kaldırdık, arka plan (.ts'ten geliyor) ile çalışıyor */
+  border: none;
+}
+
+/* Donut'ın ortasındaki boşluğu yaratan yeni iç maske */
+.donut-inner {
+  width: 75%;
+  height: 75%;
+  background: var(--surface-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .donut-center-text { font-size: clamp(11px, 2vw, 12px); font-weight: 700; color: var(--text-primary); }

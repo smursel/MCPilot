@@ -14,8 +14,11 @@
 
   <!-- Primary spatial division between navigation/controls and content -->
   <div class="layout">
-    <app-filter-sidebar (viewChanged)="currentView.set($event)"></app-filter-sidebar>
-    
+    <app-filter-sidebar 
+    (viewChanged)="currentView.set($event)"
+    (dateRangeChanged)="onDateRangeChanged($event)">
+    </app-filter-sidebar>
+
     <!-- Independent scroll region preserving sidebar visibility on wide screens -->
     <main class="main">
       <div class="content-wrapper">
