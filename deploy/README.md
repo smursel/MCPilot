@@ -40,6 +40,8 @@ rsync -avz --delete \
 klasörün **içeriğini** kopyalar, `browser` klasörün kendisini kopyalardı.
 
 Nginx yapılandırması değişmediği sürece reload gerekmez — dosyalar statik.
+`index.html` `no-cache` ile servis edildiği için tarayıcı yeni sürümü kendiliğinden
+alır; kullanıcıdan sert yenileme istemene gerek yok.
 
 ## Nginx yapılandırması (ilk kurulumda yapıldı)
 
@@ -78,6 +80,17 @@ Kökün ve diğer SPA'nin bozulmadığını da kontrol et:
 curl -o /dev/null -w '%{http_code}\n' https://lintechtests.online/         # CRM
 curl -o /dev/null -w '%{http_code}\n' https://lintechtests.online/kaylin/  # Kayhos
 ```
+
+## Önbellek
+
+`index.html` hash'siz olduğu için `no-cache, must-revalidate` ile servis edilir.
+Aksi halde tarayıcı eski HTML'i saklar ve yeni deploy'dan sonra artık silinmiş
+asset dosyalarını istemeye devam eder — kullanıcı eski siteyi görür.
+
+Asset adları içerik hash'i taşıdığı için (`outputHashing: all`) onlar
+`public, max-age=31536000, immutable` ile servis edilir. `expires` yönergesiyle
+`add_header` birlikte kullanılırsa iki ayrı `Cache-Control` başlığı döner,
+bu yüzden yalnızca `add_header` kullanılıyor.
 
 ## Bilinen davranış
 
