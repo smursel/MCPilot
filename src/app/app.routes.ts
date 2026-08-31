@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'chat',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
 ];

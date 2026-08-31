@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, effect, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConversationSidebarComponent } from '../../components/conversation-sidebar/conversation-sidebar.component';
 import { MessageInputComponent } from '../../components/message-input/message-input.component';
 import { MessageListComponent } from '../../components/message-list/message-list.component';
@@ -24,6 +25,7 @@ export class ChatPageComponent implements OnInit {
   private readonly facade = inject(ChatFacade);
   readonly store = inject(ChatStore);
   readonly ui = inject(AppStore);
+  private readonly router = inject(Router);
 
   constructor() {
     effect(() => {
@@ -40,11 +42,11 @@ export class ChatPageComponent implements OnInit {
 this.facade.init();
   }
 
-  // tema değiştirme buton tetikleyicisi - store üzerindeki temayı tersine çevirir
+  // tema değiştirme buton tetikleyicisi - ui üzerindeki temayı tersine çevirir
   toggleTheme(): void {
-    const currentTheme = this.store.theme();
+    const currentTheme = this.ui.theme();
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    this.store.setTheme(newTheme); 
+    this.ui.setTheme(newTheme); 
   }
 
   goBack(): void {
@@ -52,8 +54,7 @@ this.facade.init();
   }
 
   toggleLanguage(): void {
-    const newLang = this.store.language() === 'tr' ? 'en' : 'tr';
-    this.store.setLanguage(newLang);
-  }
+    const newLang = this.ui.language() === 'tr' ? 'en' : 'tr';
+    this.ui.setLanguage(newLang);
   }
 }
