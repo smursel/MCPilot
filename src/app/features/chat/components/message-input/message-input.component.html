@@ -1,45 +1,37 @@
-<form class="message-form" (ngSubmit)="send()">
+<form class="composer" (ngSubmit)="send()">
+  @if (store.error(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+
   <div class="input-wrapper">
-    
-    <!-- textarea alanı - çok satırlı girdi ve yüklenme anında kilitlenme için -->
     <textarea
-      name="messageInput"
-      [(ngModel)]="text"
-      (keydown.enter)="handleEnter($event)"
-      placeholder="{{ store.language() === 'tr' ? 'Mesajını yaz...' : 'Type your message...' }}"
-      [disabled]="store.isLoading()"
-      aria-label="Chat message input"
+      name="message"
       rows="1"
+      [ngModel]="text()"
+      (ngModelChange)="text.set($event)"
+      (keydown.enter)="onEnter($event)"
+      [placeholder]="placeholder()"
+      [disabled]="!store.configured()"
+      aria-label="Mesaj"
     ></textarea>
-    
-    <!-- gönder butonu - yükleme durumunda yönetim ve boş metin engellemesi için -->
-    <button 
-      type="submit" 
-      [disabled]="!text.trim() || store.isLoading()"
-      aria-label="Send message"
-      class="send-btn"
+
+    <button
+      type="submit"
+      class="send"
+      [disabled]="!text().trim() || !store.canSend()"
+      aria-label="Gönder"
     >
-      <span *ngIf="store.isLoading()">...</span>
-      <svg 
-        *ngIf="!store.isLoading()" 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="20" 
-        height="20" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <line x1="22" y1="2" x2="11" y2="13"></line>
-        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-      </svg>
+      @if (store.sending()) {
+        <span class="spinner"></span>
+      } @else {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      }
     </button>
   </div>
-  
-  <!-- hata mesajı alanı - API hatalarını erişilebilir şekilde yansıtmak için -->
-  <div *ngIf="store.error()" class="error-msg" role="alert">
-    {{ store.error() }}
-  </div>
+
+  <p class="hint">Enter ile gönder, Shift+Enter ile alt satır</p>
 </form>

@@ -1,0 +1,8 @@
+{
+  "/mcpilot-api": {
+    "target": "https://lintechtests.online",
+    "changeOrigin": true,
+    "secure": true,
+    "cookieDomainRewrite": "localhost"
+  }
+}

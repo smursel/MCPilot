@@ -1,0 +1,24 @@
+<div class="steps">
+  @for (step of steps(); track step.id) {
+    <div class="step" [class.done]="step.done" [class.failed]="step.done && step.success === false">
+      @if (step.done) {
+        <span class="icon">{{ step.success === false ? '✕' : '✓' }}</span>
+      } @else {
+        <span class="spinner"></span>
+      }
+
+      <span class="text">
+        @if (step.done) {
+          {{ step.success === false ? 'Sorgu başarısız' : 'Veri alındı' }}:
+          <code>{{ step.tool }}</code>
+        } @else {
+          Veritabanına sorgu atılıyor: <code>{{ step.tool }}</code>
+        }
+      </span>
+
+      @if (step.done && step.durationMs !== undefined) {
+        <span class="duration">{{ duration(step.durationMs) }}</span>
+      }
+    </div>
+  }
+</div>
