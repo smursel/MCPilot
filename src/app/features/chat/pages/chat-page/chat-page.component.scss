@@ -1,98 +1,68 @@
-/* --- SOL ÜST MENÜ GRUBU (Spesifik Taşıyıcı) --- */
-.top-actions {
-  position: absolute; 
-  top: clamp(16px, 2.5vh, 24px);
-  left: clamp(16px, 2.5vw, 24px); 
-  z-index: 1000; 
+.shell {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start; 
+  height: 100%;
+  min-height: 0;
+  background: var(--bg-tint, #f8fafc);
 }
 
-/* Ortak buton stillerimiz */
-.icon-btn {
-  width: 44px !important;
-  height: 44px !important;
-  min-width: 44px !important; 
-  min-height: 44px !important; 
-  flex-shrink: 0 !important;  
-  padding: 0;
-  
-  border-radius: 50%;
-  background: var(--surface-white);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface-white, #fff);
+}
+
+.topbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
+  padding: 9px clamp(12px, 3vw, 24px);
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  flex-shrink: 0;
+  min-height: 52px;
+}
+
+.brand {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--text-primary, #333);
+  margin-right: auto;
+}
+
+.menu,
+.theme {
+  border: 1px solid transparent;
+  background: none;
+  font-size: 16px;
+  line-height: 1;
+  padding: 6px 9px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* İkonun Vurgu Rengi (Aydınlık Mod Default) */
-  .vurgu-icon {
-    color: var(--primary-blue);
-    transition: color 0.3s ease;
-  }
-
-  /* Emoji boyutunu sabitliyoruz ki büzüşmesin */
-  span {
-    font-size: 20px;
-    line-height: 1;
-  }
+  color: var(--text-primary, #333);
 
   &:hover {
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    .vurgu-icon {
-      color: var(--accent-coral);
-    }
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.95);
+    background: var(--hover-bg, rgba(15, 23, 42, 0.05));
   }
 }
 
-/* Karanlık Modda İkon Rengi Değişimi */
-:host-context([data-theme='dark']) .vurgu-icon {
-  color: var(--accent-coral);
+.menu {
+  display: none;
 }
 
-/* --- FLUID & RESPONSIVE CHAT PAGE LAYOUT --- */
-:host {
-  display: block;
-  height: 100vh;
-  height: 100dvh; /* Dinamik viewport yüksekliği (mobil tarayıcılar için hayat kurtarır) */
-  width: 100vw;
-  background-color: var(--bg-tint);
-  transition: background-color 0.3s ease; /* Tema geçişini yumuşatır */
+app-model-selector {
+  min-width: 0;
 }
 
-.chat-page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-}
+@media (max-width: 860px) {
+  .menu {
+    display: block;
+  }
 
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* mesaj listesi alanı - kalan tüm boşluğu esnek bir şekilde kaplama */
-app-message-list {
-  flex: 1;
-  overflow: hidden; 
-}
-
-/* input bileşeni - ezilmesini önleyerek en alta sabitleme */
-app-message-input {
-  flex-shrink: 0; 
-  width: 100%;
+  .brand {
+    font-size: 13.5px;
+  }
 }
 
 .no-session {
@@ -106,5 +76,4 @@ app-message-input {
   &--error {
     color: var(--accent-coral);
   }
-}
 }

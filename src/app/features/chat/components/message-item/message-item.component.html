@@ -1,26 +1,35 @@
-<div [class]="'message-wrapper ' + (message.role === 'user' ? 'is-user' : 'is-ai')">
-  
-  <!-- -- AI avatar area -->
-  <div *ngIf="message.role === 'assistant'" class="avatar" aria-label="AI Assistant" role="img">
-    <span>🤖</span>
-  </div>
-  
-  <div class="bubble">
-    <!-- -- Display text if sent, otherwise show animated typing indicator for streaming state -->
-    <div class="content">
-      <ng-container *ngIf="message.status !== 'streaming'">{{ message.content }}</ng-container>
-      
-      <div *ngIf="message.status === 'streaming'" class="typing-indicator" aria-label="AI is analyzing data">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
+<article class="message" [class.user]="message().role === 'user'">
+  <div class="avatar" aria-hidden="true">{{ message().role === 'user' ? '👤' : '🤖' }}</div>
+
+  <div class="body">
+    @if (message().truncated) {
+      <p class="badge truncated">Yanıt uzunluk sınırına takıldı, eksik olabilir.</p>
+    }
+
+    @if (message().progress.length > 0) {
+      <app-progress-steps [steps]="message().progress" />
+    }
+
+    <div class="bubble">
+      @if (message().role === 'user') {
+        <p class="plain">{{ message().text }}</p>
+      } @else if (message().status === 'error') {
+        <p class="error-text">{{ message().error }}</p>
+      } @else if (message().text) {
+        <app-markdown-view [source]="message().text" />
+      } @else {
+        <span class="typing" aria-label="Yanıt yazılıyor">
+          <i></i><i></i><i></i>
+        </span>
+      }
     </div>
-    
-    <div class="meta-data" *ngIf="message.status !== 'streaming'">
-      <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
-      <span *ngIf="message.status === 'error'" class="status-error">Hata oluştu</span>
-    </div>
+
+    @if (message().toolCalls.length > 0) {
+      <app-tool-trace-panel [traces]="message().toolCalls" />
+    }
+
+    @if (message().usage; as usage) {
+      <p class="usage">{{ usage.model }} · {{ usage.totalTokens }} token</p>
+    }
   </div>
-  
-</div>
+</article>
