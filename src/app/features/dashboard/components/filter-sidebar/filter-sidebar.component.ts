@@ -4,6 +4,12 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 export type DashboardView = 'sales' | 'product' | 'customer';
 
+const formatDate = (d: Date) => {
+  const month = (d.getMonth() + 1).toString().padStart(2, '0');
+  const day = d.getDate().toString().padStart(2, '0');
+  return `${d.getFullYear()}-${month}-${day}`;
+};
+
 /**
  * Component: FilterSidebarComponent
  * 
@@ -25,8 +31,8 @@ export class FilterSidebarComponent {
 
   // Reactive signals manage active filters without triggering deep change detection cycles
   activeView = signal<DashboardView>('sales');
-  startDate = signal<string>('2026-08-01');
-  endDate = signal<string>('2026-08-27');
+  startDate = signal<string>(formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1)));
+  endDate = signal<string>(formatDate(new Date()));
   
   // Tracks the dropdown preset state to avoid disjointed UX during manual overrides
   datePreset = signal<string>('this-month'); 
@@ -82,11 +88,11 @@ export class FilterSidebarComponent {
     const preset = (event.target as HTMLSelectElement).value;
     this.datePreset.set(preset);
     
-    const today = '2026-08-27';
+    const today = formatDate(new Date());
 
     switch (preset) {
       case 'this-month':
-        this.startDate.set('2026-08-01');
+        this.startDate.set(formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1)));
         this.endDate.set(today);
         break;
       case 'last-quarter':
@@ -95,7 +101,7 @@ export class FilterSidebarComponent {
         this.endDate.set('2026-06-30');
         break;
       case 'ytd':
-        this.startDate.set('2026-01-01');
+        this.startDate.set(`${new Date().getFullYear()}-01-01`);
         this.endDate.set(today);
         break;
       case 'custom':

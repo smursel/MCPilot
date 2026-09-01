@@ -39,7 +39,7 @@ export class DashboardPageComponent implements OnInit{
   // Injects the centralized store to dynamically bind localized text across the layout
   store = inject(AppStore);
   private router = inject(Router);
-  private dashboardService = inject(DashboardService); // Inject the data service 
+  dashboardService = inject(DashboardService); // Inject the data service 
 
   // Governs the off-canvas drawer's visibility state without complex input/output chains
   isDrawerOpen = signal<boolean>(false);
@@ -49,8 +49,17 @@ export class DashboardPageComponent implements OnInit{
 
   // Lifecycle hook: Triggers immediately after component initialization
   ngOnInit(): void {
-    // Initial fetch to populate the dashboard with default date range
-    this.dashboardService.loadDashboardData('2026-08-01', '2026-08-27');
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const formatDate = (d: Date) => {
+      const month = (d.getMonth() + 1).toString().padStart(2, '0');
+      const day = d.getDate().toString().padStart(2, '0');
+      return `${d.getFullYear()}-${month}-${day}`;
+    };
+
+    // Trigger service with dynamic dates
+    this.dashboardService.loadDashboardData(formatDate(firstDay), formatDate(today));
   }
 
  // Event handler for sidebar date range submissions

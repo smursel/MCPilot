@@ -1,6 +1,6 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
+import { catchError, of, forkJoin, finalize } from 'rxjs';
 
 // SQL tablolarına ve fonksiyonlarına %100 uygun arayüzlerimiz (Interfaces)
 export interface TopProduct { rank: number; name: string; category: string; units: number; revenue: number; trend: 'up' | 'down'; }
@@ -36,6 +36,7 @@ export class DashboardService {
   readonly kpiSummary = signal<KpiSummary | null>(null);
   readonly monthlyData = signal<MonthlyData[]>([]);
   readonly monthlySales = signal<MonthlyData[]>([]);
+  readonly isLoading = signal<boolean>(false);
 
   // -------------------------------------------------------------------------
   // FALLBACK (DUMMY) DATA
@@ -95,72 +96,44 @@ private readonly dummyMonthlySales: MonthlyData[] = [
   { month: 'Ağu', revenue: 146240, profit: 54400 }
 ];
 
-  // -------------------------------------------------------------------------
-  // VERİ YÜKLEME METODU
-  // Amaç: API'den verileri çekmek, hata durumunda catchError ile dummy verileri basmak.
-  // -------------------------------------------------------------------------
+  /**
+   * Fetches all dashboard metrics concurrently.
+   * Utilizes forkJoin to execute multiple HTTP requests in parallel, 
+   * reducing total network latency. Each request implements a fallback mechanism 
+   * (catchError) to return mock data if the API is unavailable, ensuring UI stability.
+   */
   loadDashboardData(startDate: string, endDate: string) {
     console.log(`Veri Yükleniyor: ${startDate} - ${endDate} arası...`);
+    
+    // Activate loading state to trigger UI spinners
+    this.isLoading.set(true);
 
     // Tarih filtrelerini HTTP sorgu parametresi (QueryString) haline getiriyoruz
     const params = new HttpParams()
       .set('startDate', startDate)
       .set('endDate', endDate);
-
-    // 1. Top Products
-    this.http.get<TopProduct[]>(`${this.baseUrl}/top-products`, { params }).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Top Products), test verisi yükleniyor.', err.message);
-        return of(this.dummyTopProducts); // Hata olursa Observable zincirini dummy data ile devam ettir
-      })
-    ).subscribe(data => this.topProducts.set(data));
-
-    // 2. Category Data
-    this.http.get<CategoryData[]>(`${this.baseUrl}/sales-by-category`, { params }).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Category Data), test verisi yükleniyor.', err.message);
-        return of(this.dummyCategoryData);
-      })
-    ).subscribe(data => this.categoryData.set(data));
-
-    // 3. Region Data
-    this.http.get<RegionData[]>(`${this.baseUrl}/sales-by-city`, { params }).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Region Data), test verisi yükleniyor.', err.message);
-        return of(this.dummyRegionData);
-      })
-    ).subscribe(data => this.regionData.set(data));
-
-    // 4. Top Customers (Eğer bu global ise params göndermeyebiliriz, şimdilik filtersiz)
-    this.http.get<TopCustomer[]>(`${this.baseUrl}/top-customers`).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Top Customers), test verisi yükleniyor.', err.message);
-        return of(this.dummyTopCustomers);
-      })
-    ).subscribe(data => this.topCustomers.set(data));
-
-    // 5. Segment Data
-    this.http.get<SegmentData[]>(`${this.baseUrl}/customer-segments`).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Segment Data), test verisi yükleniyor.', err.message);
-        return of(this.dummySegmentData);
-      })
-    ).subscribe(data => this.segmentData.set(data));
-
-    // 6. KPI Cards Data
-    this.http.get<KpiSummary>(`${this.baseUrl}/kpi-summary`, { params }).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (KPI Summary), test verisi yükleniyor.', err.message);
-        return of(this.dummyKpiSummary);
-      })
-    ).subscribe(data => this.kpiSummary.set(data));
-
-    // 7. Monthly Sales Data
-    this.http.get<MonthlyData[]>(`${this.baseUrl}/monthly-sales`, { params }).pipe(
-      catchError((err) => {
-        console.warn('API Hatası (Monthly Sales), test verisi yükleniyor.', err.message);
-        return of(this.dummyMonthlySales);
-      })
-    ).subscribe(data => this.monthlySales.set(data));
+      
+      forkJoin([
+      this.http.get<TopProduct[]>(`${this.baseUrl}/top-products`, { params }).pipe(catchError(() => of(this.dummyTopProducts))),
+      this.http.get<CategoryData[]>(`${this.baseUrl}/sales-by-category`, { params }).pipe(catchError(() => of(this.dummyCategoryData))),
+      this.http.get<RegionData[]>(`${this.baseUrl}/sales-by-city`, { params }).pipe(catchError(() => of(this.dummyRegionData))),
+      // Global customer metrics do not require date filtering parameters
+      this.http.get<TopCustomer[]>(`${this.baseUrl}/top-customers`).pipe(catchError(() => of(this.dummyTopCustomers))),
+      this.http.get<SegmentData[]>(`${this.baseUrl}/customer-segments`).pipe(catchError(() => of(this.dummySegmentData))),
+      this.http.get<KpiSummary>(`${this.baseUrl}/kpi-summary`, { params }).pipe(catchError(() => of(this.dummyKpiSummary))),
+      this.http.get<MonthlyData[]>(`${this.baseUrl}/monthly-sales`, { params }).pipe(catchError(() => of(this.dummyMonthlySales)))
+    ]).pipe(
+      // Ensure the loading state is disabled regardless of request success or failure
+      finalize(() => this.isLoading.set(false))
+    ).subscribe(([products, categories, regions, customers, segments, kpi, monthly]) => {
+      // Batch update all reactive signals to prevent disjointed UI renders
+      this.topProducts.set(products);
+      this.categoryData.set(categories);
+      this.regionData.set(regions);
+      this.topCustomers.set(customers);
+      this.segmentData.set(segments);
+      this.kpiSummary.set(kpi);
+      this.monthlySales.set(monthly);
+    });
   }
 }
