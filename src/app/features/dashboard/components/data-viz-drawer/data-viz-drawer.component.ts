@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MessageListComponent } from '@features/chat/components/message-list/message-list.component';
 import { MessageInputComponent } from '@features/chat/components/message-input/message-input.component';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 /**
  * Component: DataVizDrawerComponent
@@ -13,7 +13,7 @@ import { MessageInputComponent } from '@features/chat/components/message-input/m
 @Component({
   selector: 'app-data-viz-drawer',
   standalone: true,
-  imports: [CommonModule, MessageListComponent, MessageInputComponent],
+  imports: [CommonModule, TranslatePipe, MessageListComponent, MessageInputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-viz-drawer.component.html',
   styleUrl: './data-viz-drawer.component.scss'

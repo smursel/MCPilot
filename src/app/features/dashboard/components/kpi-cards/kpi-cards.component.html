@@ -20,7 +20,7 @@
           } @else {
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2V8M2 5L5 8L8 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           }
-          {{ kpi.isPositive ? '+' : '' }}{{ kpi.change }}% {{ store.language() === 'tr' ? 'geçen yıla göre' : 'vs. last year' }}
+          {{ kpi.isPositive ? '+' : '' }}{{ kpi.change }}% {{ 'KPI.VS_LAST_YEAR' | translate }}
         </div>
       </div>
       

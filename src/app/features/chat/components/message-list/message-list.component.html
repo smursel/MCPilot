@@ -1,14 +1,14 @@
 <div class="scroller" #scroller (scroll)="onScroll()">
   @if (store.loadingConversation()) {
-    <p class="state">Konuşma yükleniyor…</p>
+    <p class="state">{{ 'MESSAGE_LIST.LOADING' | translate }}</p>
   } @else if (store.isEmpty()) {
     <div class="hero">
-      <h1>Kurumsal veri asistanı</h1>
-      <p>Verilerinizle ilgili sorunuzu doğal dilde yazın. Asistan gerekli sorguları kendisi çalıştırır ve kaynaklarını gösterir.</p>
+      <h1>{{ 'MESSAGE_LIST.HERO_TITLE' | translate }}</h1>
+      <p>{{ 'MESSAGE_LIST.HERO_DESC' | translate }}</p>
       <ul class="samples">
-        <li>Hangi tablolar var?</li>
-        <li>Son 30 günde en çok satan 10 ürün nedir?</li>
-        <li>Aylık toplam ciroyu tablo olarak göster</li>
+        <li>{{ 'MESSAGE_LIST.SAMPLE_1' | translate }}</li>
+        <li>{{ 'MESSAGE_LIST.SAMPLE_2' | translate }}</li>
+        <li>{{ 'MESSAGE_LIST.SAMPLE_3' | translate }}</li>
       </ul>
     </div>
   } @else {

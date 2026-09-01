@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, signal, inject } from '@angular/core';
 import { AppStore } from '@core/app.store';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 export type DashboardView = 'sales' | 'product' | 'customer';
 
@@ -13,6 +14,7 @@ export type DashboardView = 'sales' | 'product' | 'customer';
 @Component({
   selector: 'app-filter-sidebar',
   standalone: true,
+  imports: [TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './filter-sidebar.component.html',
   styleUrl: './filter-sidebar.component.scss'

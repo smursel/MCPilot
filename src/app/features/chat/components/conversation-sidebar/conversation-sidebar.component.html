@@ -1,6 +1,6 @@
 <aside class="sidebar" [class.open]="store.sidebarOpen()">
   <button type="button" class="new-chat" (click)="newChat()">
-    <span class="plus">+</span> Yeni sohbet
+    <span class="plus">+</span> {{ 'SIDEBAR.NEW_CHAT' | translate }}
   </button>
 
   <nav class="list">
@@ -14,8 +14,8 @@
         role="button"
       >
         <div class="row-text">
-          <span class="title">{{ conversation.title || 'Adsız sohbet' }}</span>
-          <span class="meta">{{ when(conversation.updatedAt) }} · {{ conversation.messageCount }} mesaj</span>
+          <span class="title">{{ conversation.title || ('SIDEBAR.UNTITLED_CHAT' | translate) }}</span>
+          <span class="meta">{{ when(conversation.updatedAt) }} • {{ conversation.messageCount }} {{ 'SIDEBAR.MESSAGES' | translate }}</span>
         </div>
 
         <button
@@ -29,7 +29,7 @@
         </button>
       </div>
     } @empty {
-      <p class="empty">Henüz sohbet yok.</p>
+      <p class="empty">{{ 'SIDEBAR.EMPTY_STATE' | translate }}</p>
     }
   </nav>
 </aside>

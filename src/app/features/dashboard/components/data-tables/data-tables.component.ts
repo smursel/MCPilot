@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, inject } from '@angular/core
 import { CommonModule } from '@angular/common';
 import { AppStore } from '@core/app.store';
 import { DashboardService } from '../../services/dashboard.service';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 /**
  * Component: DataTablesComponent
@@ -13,7 +14,7 @@ import { DashboardService } from '../../services/dashboard.service';
 @Component({
   selector: 'app-data-tables',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-tables.component.html',
   styleUrl: './data-tables.component.scss'

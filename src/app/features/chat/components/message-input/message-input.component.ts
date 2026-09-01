@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { ChatFacade } from '@core/chat-facade.service';
 import { ChatStore } from '@core/chat.store';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 @Component({
   selector: 'app-message-input',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,7 +15,6 @@ import { ChatStore } from '@core/chat.store';
 export class MessageInputComponent {
   private readonly facade = inject(ChatFacade);
   readonly store = inject(ChatStore);
-
   readonly text = signal('');
 
   send(): void {
@@ -22,7 +22,6 @@ export class MessageInputComponent {
     if (!value || !this.store.canSend()) {
       return;
     }
-
     this.facade.send(value);
     this.text.set('');
   }
@@ -35,10 +34,4 @@ export class MessageInputComponent {
     }
   }
 
-  placeholder(): string {
-    if (!this.store.configured()) {
-      return 'Sohbet kullanılamıyor — sunucuda API anahtarı tanımlı değil';
-    }
-    return 'Verilerinize dair bir soru sorun…';
-  }
 }

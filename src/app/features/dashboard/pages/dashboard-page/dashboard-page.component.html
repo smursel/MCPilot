@@ -22,33 +22,24 @@
     <!-- Independent scroll region preserving sidebar visibility on wide screens -->
     <main class="main">
       <div class="content-wrapper">
-        
         <div class="page-title">
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <span>MCPilot Dashboard</span>
             <span class="breadcrumb__sep">/</span>
-            <span>{{ store.language() === 'tr' ? 'Çalışma Alanı' : 'Workspace' }}</span>
+            <span>{{ 'DASHBOARD.WORKSPACE' | translate }}</span>
             <span class="breadcrumb__sep">/</span>
-            <span class="breadcrumb__active">{{ store.language() === 'tr' ? 'E-Ticaret Analitikleri' : 'E-Commerce Analytics' }}</span>
+            <span class="breadcrumb__active">{{ 'DASHBOARD.ECOMMERCE_ANALYTICS' | translate }}</span>
           </nav>
           
           <h1 class="page-title__heading">
-            @if (store.language() === 'tr') {
-              @switch (currentView()) {
-                @case ('sales') { Satış Performansı }
-                @case ('product') { Ürün Analitikleri }
-                @case ('customer') { Müşteri İçgörüleri }
-              }
-            } @else {
-              @switch (currentView()) {
-                @case ('sales') { Sales Performance }
-                @case ('product') { Product Analytics }
-                @case ('customer') { Customer Insights }
-              }
+            @switch (currentView()) {
+              @case ('sales') { {{ 'DASHBOARD.MODES.SALES' | translate }} }
+              @case ('product') { {{ 'DASHBOARD.MODES.PRODUCT' | translate }} }
+              @case ('customer') { {{ 'DASHBOARD.MODES.CUSTOMER' | translate }} }
             }
           </h1>
           <p class="page-title__sub">
-            {{ store.language() === 'tr' ? 'Filtrelenmiş performans metrikleri · Son güncelleme 27 Ağu 2026' : 'Filtered performance metrics · Last updated Aug 27, 2026' }}
+           {{ 'DASHBOARD.UPDATED_AT' | translate }}
           </p>
         </div>
 

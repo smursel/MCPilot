@@ -7,8 +7,8 @@
     <div class="chart-card">
       <div class="chart-card__header">
         <div>
-          <h3 class="chart-card__title">{{ store.language() === 'tr' ? 'Aylık Satış Trendi' : 'Monthly Sales Trends' }}</h3>
-          <p class="chart-card__sub">{{ store.language() === 'tr' ? 'Ciro ve kar · Oca–Ağu 2026' : 'Revenue vs. profit · Jan–Aug 2026' }}</p>
+          <h3 class="chart-card__title">{{ 'CHARTS.SALES_TREND' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.SALES_TREND_SUB' | translate }}</p>
         </div>
         <button class="btn--icon" aria-label="More Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
@@ -49,8 +49,8 @@
       </div>
       
       <div class="chart-legend chart-legend--center">
-        <span class="legend-item"><span class="legend-dot" style="background: var(--primary-blue)"></span>{{ store.language() === 'tr' ? 'Ciro' : 'Revenue' }}</span>
-        <span class="legend-item"><span class="legend-dot" style="background: #10B981"></span>{{ store.language() === 'tr' ? 'Kar' : 'Profit' }}</span>
+        <span class="legend-item"><span class="legend-dot" style="background: var(--primary-blue)"></span>{{ 'CHARTS.REVENUE' | translate }}</span>
+        <span class="legend-item"><span class="legend-dot" style="background: #10B981"></span>{{ 'CHARTS.PROFIT' | translate }}</span>
       </div>
     </div>
   }
@@ -61,8 +61,8 @@
     <div class="chart-card">
       <div class="chart-card__header">
         <div>
-          <h3 class="chart-card__title">{{ store.language() === 'tr' ? 'Kategori Satışları' : 'Sales by Category' }}</h3>
-          <p class="chart-card__sub">{{ store.language() === 'tr' ? 'Ürün gruplarına göre ciro dağılımı' : 'Revenue distribution across product lines' }}</p>
+          <h3 class="chart-card__title">{{ 'CHARTS.CATEGORY_SALES' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.CATEGORY_SALES_SUB' | translate }}</p>
         </div>
         <button class="btn--icon" aria-label="More Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
@@ -97,8 +97,8 @@
     <div class="chart-card">
       <div class="chart-card__header">
         <div>
-          <h3 class="chart-card__title">{{ store.language() === 'tr' ? 'Şehir / Bölge Performansı' : 'City / Region Performance' }}</h3>
-          <p class="chart-card__sub">{{ store.language() === 'tr' ? 'Ciroya göre en iyi pazarlar' : 'Top markets by revenue' }}</p>
+          <h3 class="chart-card__title">{{ 'CHARTS.REGION_PERF' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.REGION_PERF_SUB' | translate }}</p>
         </div>
         <button class="btn--icon" aria-label="More Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
@@ -126,8 +126,8 @@
     <div class="chart-card">
       <div class="chart-card__header">
         <div>
-          <h3 class="chart-card__title">{{ store.language() === 'tr' ? 'Müşteri Segment Performansı' : 'Customer Segment Performance' }}</h3>
-          <p class="chart-card__sub">{{ store.language() === 'tr' ? 'Segmentlere göre ciro payı' : 'Revenue share by customer segment' }}</p>
+          <h3 class="chart-card__title">{{ 'CHARTS.SEGMENT_PERF' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.SEGMENT_PERF_SUB' | translate }}</p>
         </div>
         <button class="btn--icon" aria-label="More Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
       </div>
@@ -135,7 +135,7 @@
       <div class="chart-donut-layout">
         <div class="donut-mockup" [style.background]="segmentDonutStyle()">
           <div class="donut-inner">
-            <span class="donut-center-text">{{ store.language() === 'tr' ? 'Segmentler' : 'Segments' }}</span>
+            <span class="donut-center-text">{{ 'CHARTS.SEGMENTs' | translate }}</span>
           </div>
         </div>
         

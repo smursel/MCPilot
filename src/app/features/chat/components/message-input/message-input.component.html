@@ -10,7 +10,7 @@
       [ngModel]="text()"
       (ngModelChange)="text.set($event)"
       (keydown.enter)="onEnter($event)"
-      [placeholder]="placeholder()"
+      [placeholder]="!store.configured() ? ('INPUT.PLACEHOLDER_DISABLED' | translate) : ('INPUT.PLACEHOLDER' | translate)"
       [disabled]="!store.configured()"
       aria-label="Mesaj"
     ></textarea>
@@ -19,7 +19,7 @@
       type="submit"
       class="send"
       [disabled]="!text().trim() || !store.canSend()"
-      aria-label="Gönder"
+      [attr.aria-label]="'INPUT.SEND' | translate"
     >
       @if (store.sending()) {
         <span class="spinner"></span>
@@ -33,5 +33,5 @@
     </button>
   </div>
 
-  <p class="hint">Enter ile gönder, Shift+Enter ile alt satır</p>
+  <p class="hint">{{ 'INPUT.HINT' | translate }}</p>
 </form>

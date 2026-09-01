@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, ChangeDetectionStrategy, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppStore } from '@core/app.store';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 /**
  * Component: DashboardHeaderComponent
@@ -12,7 +13,7 @@ import { AppStore } from '@core/app.store';
 @Component({
   selector: 'app-dashboard-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard-header.component.html',
   styleUrl: './dashboard-header.component.scss'

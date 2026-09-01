@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, Input, inject, computed } from '@an
 import { CommonModule } from '@angular/common';
 import { AppStore } from '@core/app.store';
 import { DashboardService } from '../../services/dashboard.service';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
+import { TRANSLATIONS } from '@core/translations';
 
 /**
  * Component: ChartPlaceholdersComponent
@@ -13,7 +15,7 @@ import { DashboardService } from '../../services/dashboard.service';
 @Component({
   selector: 'app-chart-placeholders',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './chart-placeholders.component.html',
   styleUrl: './chart-placeholders.component.scss'
@@ -102,32 +104,16 @@ export class ChartPlaceholdersComponent {
     return { revenue: revPath, profit: profPath, points };
   });
   
-  /**
-   * Abstracts localization logic from the HTML template.
-   * Prevents template bloat and keeps translation mapping centralized.
-   */
   translateCategory(cat: string): string {
-    if (this.store.language() !== 'tr') return cat;
-    const dict: Record<string, string> = {
-      'Electronics': 'Elektronik',
-      'Apparel': 'Giyim',
-      'Home & Garden': 'Ev & Bahçe',
-      'Sports': 'Spor',
-      'Beauty': 'Kozmetik'
-    };
-    return dict[cat] || cat;
+    const lang = this.store.language() as 'tr' | 'en';
+    const t = TRANSLATIONS[lang].CHARTS.CATEGORIES as Record<string, string>;
+    return t[cat] || cat; // Bulursa çeviriyi, bulamazsa orijinalini dönsün
   }
 
-  /**
-   * Translates backend-aligned SQL segment values into user-friendly localized strings.
-   */
   translateSegment(seg: string): string {
-    if (this.store.language() !== 'tr') return seg;
-    const dict: Record<string, string> = {
-      'VIP': 'VIP',
-      'Loyal': 'Sadık',
-      'Standard': 'Standart'
-    };
-    return dict[seg] || seg;
+    const lang = this.store.language() as 'tr' | 'en';
+    const t = TRANSLATIONS[lang].CHARTS.SEGMENT as Record<string, string>; // Çakışmayı çözdüğün SEGMENT adını kullandık ✨
+    return t[seg] || seg;
   }
+  
 }

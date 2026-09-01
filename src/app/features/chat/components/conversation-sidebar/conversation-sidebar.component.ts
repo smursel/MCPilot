@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ChatFacade } from '@core/chat-facade.service';
 import { ChatStore } from '@core/chat.store';
+import { TranslatePipe } from '../../../../shared/translate.pipe';
+import { TRANSLATIONS } from '@core/translations';
+import { AppStore } from '@core/app.store';
 
 @Component({
   selector: 'app-conversation-sidebar',
   standalone: true,
+  imports: [TranslatePipe],
   templateUrl: './conversation-sidebar.component.html',
   styleUrl: './conversation-sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,6 +16,7 @@ import { ChatStore } from '@core/chat.store';
 export class ConversationSidebarComponent {
   private readonly facade = inject(ChatFacade);
   readonly store = inject(ChatStore);
+  readonly ui = inject(AppStore);
 
   newChat(): void {
     this.facade.newConversation();
@@ -39,11 +44,15 @@ export class ConversationSidebarComponent {
     const hour = 60 * minute;
     const day = 24 * hour;
 
-    if (diff < minute) return 'az önce';
-    if (diff < hour) return `${Math.floor(diff / minute)} dk önce`;
-    if (diff < day) return `${Math.floor(diff / hour)} sa önce`;
-    if (diff < 7 * day) return `${Math.floor(diff / day)} gün önce`;
+    const lang = this.ui.language() as 'tr' | 'en'; 
+    const t = TRANSLATIONS[lang].TIME;
 
-    return date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+    if (diff < minute) return t.JUST_NOW;
+    if (diff < hour) return `${Math.floor(diff / minute)} ${t.MINS_AGO}`;
+    if (diff < day) return `${Math.floor(diff / hour)} ${t.HOURS_AGO}`;
+    if (diff < 7 * day) return `${Math.floor(diff / day)} ${t.DAYS_AGO}`;
+
+    const locale = lang === 'tr' ? 'tr-TR' : 'en-US';
+    return date.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
   }
 }

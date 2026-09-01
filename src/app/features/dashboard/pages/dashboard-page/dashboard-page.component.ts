@@ -9,6 +9,7 @@ import { ChartPlaceholdersComponent } from '../../components/chart-placeholders/
 import { DataTablesComponent } from '../../components/data-tables/data-tables.component';
 import { DataVizDrawerComponent } from '../../components/data-viz-drawer/data-viz-drawer.component';
 import { DashboardService } from '../../services/dashboard.service'; // Import the service
+import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 /**
  * Component: DashboardPageComponent
@@ -27,7 +28,8 @@ import { DashboardService } from '../../services/dashboard.service'; // Import t
     FilterSidebarComponent, 
     KpiCardsComponent, 
     DataTablesComponent,
-    ChartPlaceholdersComponent
+    ChartPlaceholdersComponent, 
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard-page.component.html',

@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, Input, computed, inject } from '@an
 import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { AppStore } from '@core/app.store';
 import { DashboardService } from '../../services/dashboard.service';
+import { TRANSLATIONS } from '@core/translations';
+import { TranslatePipe } from "../../../../shared/translate.pipe";
 
 /**
  * Defines the strict data contract for metric cards.
@@ -26,7 +28,7 @@ interface KpiMetric {
 @Component({
   selector: 'app-kpi-cards',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   providers: [CurrencyPipe, DecimalPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './kpi-cards.component.html',
@@ -56,31 +58,33 @@ export class KpiCardsComponent {
 // Veri henüz gelmediyse veya boşsa boş dizi dön (UI kırılmasın)
     if (!kpiData) return [] as KpiMetric[];
 
+    const t = TRANSLATIONS[lang].KPI;
+
     // Gelen veriyi formatlayarak UI kartlarına map'liyoruz
     return [
       { 
-        label: lang === 'tr' ? 'Dönem Cirosu' : 'Period Revenue', 
+        label: t.REVENUE, 
         value: this.currencyPipe.transform(kpiData.revenue, 'USD', 'symbol', '1.0-0'), 
         change: Math.abs(kpiData.revenueChange), 
         isPositive: kpiData.revenueChange >= 0, 
         accentColor: '#6366F1', iconBg: 'rgba(99,102,241,0.1)', iconType: 'revenue' 
       },
       { 
-        label: lang === 'tr' ? 'Dönem Karı' : 'Period Profit', 
+        label: t.PROFIT,
         value: this.currencyPipe.transform(kpiData.profit, 'USD', 'symbol', '1.0-0'), 
         change: Math.abs(kpiData.profitChange), 
         isPositive: kpiData.profitChange >= 0, 
         accentColor: '#14B8A6', iconBg: 'rgba(20,184,166,0.1)', iconType: 'profit' 
       },
       { 
-        label: lang === 'tr' ? 'Toplam Sipariş' : 'Total Orders', 
+        label: t.ORDERS, 
         value: this.decimalPipe.transform(kpiData.orders, '1.0-0'), 
         change: Math.abs(kpiData.ordersChange), 
         isPositive: kpiData.ordersChange >= 0, 
         accentColor: '#8B5CF6', iconBg: 'rgba(139,92,246,0.1)', iconType: 'orders' 
       },
       { 
-        label: lang === 'tr' ? 'Ort. Sipariş Tutarı' : 'Avg. Order Value', 
+        label: t.AOV,
         value: this.currencyPipe.transform(kpiData.aov, 'USD', 'symbol', '1.2-2'), 
         change: Math.abs(kpiData.aovChange), 
         isPositive: kpiData.aovChange >= 0, 

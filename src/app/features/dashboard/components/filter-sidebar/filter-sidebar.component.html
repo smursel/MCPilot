@@ -7,7 +7,7 @@
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M2 3H12M4 7H10M6 11H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      {{ store.language() === 'tr' ? 'Kontrol Merkezi' : 'Command Center' }}
+      {{ 'FILTER.TITLE' | translate }}
     </div>
     
     <!-- Rotational chevron provides explicit visual feedback for the accordion state -->
@@ -24,55 +24,54 @@
       
       <!-- Analytical scope constraints -->
       <div class="filter-section">
-        <p class="filter-section__label">{{ store.language() === 'tr' ? 'Analiz Modu' : 'Analysis Mode' }}</p>
-        
+        <p class="filter-section__label">{{ 'FILTER.MODE' | translate }}</p>
         <div class="view-toggle">
           <button class="toggle-btn" [class.active]="activeView() === 'sales'" (click)="onViewChange('sales')">
-            {{ store.language() === 'tr' ? 'Satış' : 'Sales' }}
+            {{ 'FILTER.BTN_SALES' | translate }}
           </button>
           <button class="toggle-btn" [class.active]="activeView() === 'product'" (click)="onViewChange('product')">
-            {{ store.language() === 'tr' ? 'Ürün' : 'Product' }}
+            {{ 'FILTER.BTN_PRODUCT' | translate }}
           </button>
           <button class="toggle-btn" [class.active]="activeView() === 'customer'" (click)="onViewChange('customer')">
-            {{ store.language() === 'tr' ? 'Müşteri' : 'Customer' }}
+            {{ 'FILTER.BTN_CUSTOMER' | translate }}
           </button>
         </div>
       </div>
 
       <!-- Temporal scope constraints -->
       <div class="filter-section">
-        <p class="filter-section__label">{{ store.language() === 'tr' ? 'Tarih Aralığı' : 'Date Range' }}</p>
+        <p class="filter-section__label">{{ 'FILTER.DATE_RANGE' | translate }}</p>
         <div class="filter-card">
           
           <div class="date-picker-group">
             <div class="date-input-wrapper">
-              <span class="date-label">{{ store.language() === 'tr' ? 'Başlangıç' : 'From' }}</span>
+              <span class="date-label">{{ 'FILTER.FROM' | translate }}</span>
               <input type="date" class="date-input" [value]="startDate()" (change)="onStartDateChange($event)"/>
             </div>
             <div class="date-input-wrapper">
-              <span class="date-label">{{ store.language() === 'tr' ? 'Bitiş' : 'To' }}</span>
+              <span class="date-label">{{ 'FILTER.TO' | translate }}</span>
               <input type="date" class="date-input" [value]="endDate()" (change)="onEndDateChange($event)"/>
             </div>
           </div>
           
           <!-- Fallback semantic pickers for accelerated interaction -->
           <select class="select" [value]="datePreset()" (change)="onPresetChange($event)">
-            <option value="custom">{{ store.language() === 'tr' ? 'Özel Aralık' : 'Custom Range' }}</option>
-            <option value="this-month">{{ store.language() === 'tr' ? 'Bu ay' : 'This month' }}</option>
-            <option value="last-quarter">{{ store.language() === 'tr' ? 'Geçen çeyrek' : 'Last quarter' }}</option>
-            <option value="ytd">{{ store.language() === 'tr' ? 'Yılbaşından bugüne' : 'Year to date' }}</option>
+            <option value="custom">{{ 'FILTER.CUSTOM' | translate }}</option>
+            <option value="this-month">{{ 'FILTER.THIS_MONTH' | translate }}</option>
+            <option value="last-quarter">{{ 'FILTER.LAST_QUARTER' | translate }}</option>
+            <option value="ytd">{{ 'FILTER.YTD' | translate }}</option>
           </select>
           
         </div>
         <!-- Micro-copy mitigating potential user confusion regarding KPI strip decoupling -->
-        <p class="filter-note">{{ store.language() === 'tr' ? 'Sadece alt metrikleri etkiler' : 'Affects lower metrics only' }}</p>
+        <p class="filter-note">{{ 'FILTER.NOTE' | translate }}</p>
       </div>
     </div>
 
     <!-- Anchored confirmation action -->
     <div class="sidebar__footer">
       <button class="btn btn--primary btn--full" (click)="applyFilters()">
-        {{ store.language() === 'tr' ? 'Filtreleri Uygula' : 'Apply Controls' }}
+        {{ 'FILTER.APPLY' | translate }}
       </button>
     </div>
   </div>
