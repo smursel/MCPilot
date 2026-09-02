@@ -49,6 +49,9 @@ export class DashboardPageComponent implements OnInit{
   // Drives conditional component rendering to reflect the user's current analytical focus
   currentView = signal<DashboardView>('sales');
 
+  activeStartDate = signal<string>('');
+  activeEndDate = signal<string>('');
+
   // Lifecycle hook: Triggers immediately after component initialization
   ngOnInit(): void {
     const today = new Date();
@@ -60,8 +63,13 @@ export class DashboardPageComponent implements OnInit{
       return `${d.getFullYear()}-${month}-${day}`;
     };
 
-    // Trigger service with dynamic dates
-    this.dashboardService.loadDashboardData(formatDate(firstDay), formatDate(today));
+    const start = formatDate(firstDay);
+    const end = formatDate(today);
+
+    this.activeStartDate.set(start);
+    this.activeEndDate.set(end);
+
+    this.dashboardService.loadDashboardData(start, end);
   }
 
   // ADDED: Kullanıcı ekranı küçültürse (Responsive test vb.) ve konuşma boşsa çekmeceyi gizle!
@@ -76,6 +84,8 @@ export class DashboardPageComponent implements OnInit{
 
  // Event handler for sidebar date range submissions
   onDateRangeChanged(range: {start: string, end: string}): void {
+    this.activeStartDate.set(range.start);
+    this.activeEndDate.set(range.end);
     this.dashboardService.loadDashboardData(range.start, range.end);
   }
 

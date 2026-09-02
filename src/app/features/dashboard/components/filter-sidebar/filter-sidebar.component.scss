@@ -118,3 +118,65 @@
 .toggle-btn { padding: 8px 12px; border-radius: 6px; background: transparent; border: none; font-size: 12px; font-weight: 500; color: var(--text-muted); cursor: pointer; text-align: left; transition: all 0.2s ease; }
 .toggle-btn:hover { color: var(--text-primary); background: rgba(0,0,0,0.02); }
 .toggle-btn.active { background: var(--surface-white); color: var(--primary-blue); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+
+.analysis-tabs {
+  display: flex;
+  background: var(--bg-tint);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  gap: 2px;
+  
+  /* Sekmeleri sağ tarafa, ok (chevron) işaretinin yanına itiyoruz */
+  margin-left: auto; 
+  margin-right: 12px;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  svg {
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    color: var(--text-primary);
+    background: rgba(0,0,0,0.03);
+  }
+
+  &.active {
+    background: var(--surface-white);
+    color: var(--primary-blue);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    
+    svg {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* Mobilde ekran daralınca sekmeler fazla yer kaplamasın diye gizleyebilir veya ufalatabiliriz */
+@media (max-width: 640px) {
+  .analysis-tabs {
+    margin-right: 8px;
+  }
+  .tab-btn {
+    padding: 6px 8px;
+    span { display: none; } /* Mobilde sadece ikonlar kalsın ki sığsın */
+  }
+}
