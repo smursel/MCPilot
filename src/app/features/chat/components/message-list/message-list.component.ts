@@ -10,6 +10,9 @@ import {
 } from '@angular/core';
 import { MessageItemComponent } from '../message-item/message-item.component';
 import { ChatStore } from '@core/chat.store';
+import { ChatFacade } from '@core/chat-facade.service';
+import { AppStore } from '@core/app.store';
+import { translate } from '@core/translations';
 import { TranslatePipe } from '../../../../shared/translate.pipe';
 
 @Component({
@@ -22,6 +25,15 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
 })
 export class MessageListComponent implements AfterViewInit, OnDestroy {
   readonly store = inject(ChatStore);
+  private readonly facade = inject(ChatFacade);
+  private readonly app = inject(AppStore);
+
+  readonly sampleKeys = [
+    'MESSAGE_LIST.SAMPLE_1',
+    'MESSAGE_LIST.SAMPLE_2',
+    'MESSAGE_LIST.SAMPLE_3',
+  ];
+
   private readonly scroller = viewChild.required<ElementRef<HTMLElement>>('scroller');
   // State tracker for message array length
   private previousMessageCount = 0;
@@ -65,6 +77,13 @@ export class MessageListComponent implements AfterViewInit, OnDestroy {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
     }
+  }
+
+  ask(key: string): void {
+    if (!this.store.canSend()) {
+      return;
+    }
+    this.facade.send(translate(this.app.language(), key));
   }
 
   onScroll(): void {

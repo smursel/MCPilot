@@ -6,9 +6,13 @@
       <h1>{{ 'MESSAGE_LIST.HERO_TITLE' | translate }}</h1>
       <p>{{ 'MESSAGE_LIST.HERO_DESC' | translate }}</p>
       <ul class="samples">
-        <li>{{ 'MESSAGE_LIST.SAMPLE_1' | translate }}</li>
-        <li>{{ 'MESSAGE_LIST.SAMPLE_2' | translate }}</li>
-        <li>{{ 'MESSAGE_LIST.SAMPLE_3' | translate }}</li>
+        @for (key of sampleKeys; track key) {
+          <li>
+            <button type="button" (click)="ask(key)" [disabled]="!store.canSend()">
+              {{ key | translate }}
+            </button>
+          </li>
+        }
       </ul>
     </div>
   } @else {

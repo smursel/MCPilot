@@ -225,3 +225,22 @@ export const TRANSLATIONS = {
     }
   }
 };
+export type TranslationLanguage = keyof typeof TRANSLATIONS;
+
+export function translate(lang: TranslationLanguage, key: string): string {
+  if (!key) {
+    return '';
+  }
+
+  let value: unknown = TRANSLATIONS[lang];
+
+  for (const part of key.split('.')) {
+    if (value && typeof value === 'object' && part in (value as Record<string, unknown>)) {
+      value = (value as Record<string, unknown>)[part];
+    } else {
+      return key;
+    }
+  }
+
+  return typeof value === 'string' ? value : key;
+}
