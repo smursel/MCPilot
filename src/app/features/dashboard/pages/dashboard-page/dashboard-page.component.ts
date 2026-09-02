@@ -1,7 +1,8 @@
-import { Component, signal, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, inject, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AppStore } from '@core/app.store';
+import { ChatStore } from '@core/chat.store';
 import { DashboardHeaderComponent } from '../../components/dashboard-header/dashboard-header.component';
 import { FilterSidebarComponent, DashboardView } from '../../components/filter-sidebar/filter-sidebar.component';
 import { KpiCardsComponent } from '../../components/kpi-cards/kpi-cards.component';
@@ -38,11 +39,12 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
 export class DashboardPageComponent implements OnInit{
   // Injects the centralized store to dynamically bind localized text across the layout
   store = inject(AppStore);
+  chatStore = inject(ChatStore);
   private router = inject(Router);
   dashboardService = inject(DashboardService); // Inject the data service 
 
   // Governs the off-canvas drawer's visibility state without complex input/output chains
-  isDrawerOpen = signal<boolean>(false);
+  isDrawerOpen = signal<boolean>(typeof window !== 'undefined' ? window.innerWidth > 900 : true);
   
   // Drives conditional component rendering to reflect the user's current analytical focus
   currentView = signal<DashboardView>('sales');
@@ -60,6 +62,16 @@ export class DashboardPageComponent implements OnInit{
 
     // Trigger service with dynamic dates
     this.dashboardService.loadDashboardData(formatDate(firstDay), formatDate(today));
+  }
+
+  // ADDED: Kullanıcı ekranı küçültürse (Responsive test vb.) ve konuşma boşsa çekmeceyi gizle!
+  @HostListener('window:resize')
+  onResize(): void {
+    if (typeof window !== 'undefined' && window.innerWidth <= 900) {
+      if (this.chatStore.isEmpty()) {
+        this.isDrawerOpen.set(false);
+      }
+    }
   }
 
  // Event handler for sidebar date range submissions

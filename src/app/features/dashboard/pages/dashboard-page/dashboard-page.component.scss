@@ -31,6 +31,22 @@
   }
 }
 
+/* Ana içerik kolonu ile AI çekmecesini yan yana dizecek esnek kapsayıcı */
+.workspace-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* KPI alanını ve altındaki grafikleri alt alta dizecek olan sol kolon */
+.workspace-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* İçeriklerin taşmasını önlemek için hayati bir kural */
+  overflow-y: auto;
+}
+
 /* 
  * Defines flexible padding via clamp to maintain visual 
  * proportion across ultra-wide and narrow displays.
@@ -50,12 +66,10 @@
  */
 .layout { 
   display: flex; 
-  flex-direction: row; 
+  flex-direction: column; 
   flex: 1; 
-  overflow: hidden; 
 
   @media (max-width: 900px) {
-    flex-direction: column;
     flex: none;
     height: auto;
     overflow: visible;
@@ -64,7 +78,6 @@
 
 .main { 
   flex: 1; 
-  overflow-y: auto; 
   background: var(--bg-tint); 
 
   @media (max-width: 900px) {

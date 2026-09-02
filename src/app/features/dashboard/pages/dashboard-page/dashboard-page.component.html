@@ -1,69 +1,67 @@
 <!-- Root application boundary ensuring contained scroll behavior on desktop -->
 <div class="app">
-  
   <!-- Global navigation injecting layout-level triggers via event emitters -->
   <app-dashboard-header 
     (openDataViz)="isDrawerOpen.set(true)" 
     (routeToChat)="navigateToChat()">
   </app-dashboard-header>
   
-  <!-- Persistent macro-metrics separated from contextual filters -->
-  <div class="global-kpi-strip">
-    <app-kpi-cards [mode]="'global'"></app-kpi-cards>
-  </div>
-
-  <!-- Primary spatial division between navigation/controls and content -->
-  <div class="layout">
-    <app-filter-sidebar 
-    (viewChanged)="currentView.set($event)"
-    (dateRangeChanged)="onDateRangeChanged($event)">
-    </app-filter-sidebar>
-
-    <!-- Independent scroll region preserving sidebar visibility on wide screens -->
-    <main class="main">
-      <div class="content-wrapper">
-        <div class="page-title">
-          <nav class="breadcrumb" aria-label="Breadcrumb">
-            <span>MCPilot Dashboard</span>
-            <span class="breadcrumb__sep">/</span>
-            <span>{{ 'DASHBOARD.WORKSPACE' | translate }}</span>
-            <span class="breadcrumb__sep">/</span>
-            <span class="breadcrumb__active">{{ 'DASHBOARD.ECOMMERCE_ANALYTICS' | translate }}</span>
-          </nav>
-          
-          <h1 class="page-title__heading">
-            @switch (currentView()) {
-              @case ('sales') { {{ 'DASHBOARD.MODES.SALES' | translate }} }
-              @case ('product') { {{ 'DASHBOARD.MODES.PRODUCT' | translate }} }
-              @case ('customer') { {{ 'DASHBOARD.MODES.CUSTOMER' | translate }} }
-            }
-          </h1>
-          <p class="page-title__sub">
-           {{ 'DASHBOARD.UPDATED_AT' | translate }}
-          </p>
-        </div>
-
-        <!-- Conditional rendering based on API resolution state -->
-        @if (dashboardService.isLoading()) {
-          <!-- Visual feedback during high-latency network requests -->
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-muted);">
-            <div style="width: 32px; height: 32px; border: 3px solid var(--border-color); border-top-color: var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px;"></div>
-            <p>{{ 'MESSAGE_LIST.LOADING' | translate }}</p>
-          </div>
-        } @else {
-          <!-- Contextual rendering delegating specific views to child widgets -->
-          <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
-          <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
-          <app-data-tables [mode]="currentView()"></app-data-tables>
-        }
+  <div class="workspace-wrapper">
+    <div class="workspace-main">
+      <!-- Persistent macro-metrics separated from contextual filters -->
+       <div class="global-kpi-strip">
+        <app-kpi-cards [mode]="'global'"></app-kpi-cards>
       </div>
-    </main>
+      <!-- Primary spatial division between navigation/controls and content -->
+       <div class="layout">
+        <app-filter-sidebar 
+        (viewChanged)="currentView.set($event)"
+        (dateRangeChanged)="onDateRangeChanged($event)">
+        </app-filter-sidebar>
+        <!-- Independent scroll region preserving sidebar visibility on wide screens -->
+         <main class="main">
+          <div class="content-wrapper">
+            <div class="page-title">
+              <nav class="breadcrumb" aria-label="Breadcrumb">
+                <span>MCPilot Dashboard</span>
+                <span class="breadcrumb__sep">/</span>
+                <span>{{ 'DASHBOARD.WORKSPACE' | translate }}</span>
+                <span class="breadcrumb__sep">/</span>
+                <span class="breadcrumb__active">{{ 'DASHBOARD.ECOMMERCE_ANALYTICS' | translate }}</span>
+              </nav>
+          
+              <h1 class="page-title__heading">
+                @switch (currentView()) {
+                  @case ('sales') { {{ 'DASHBOARD.MODES.SALES' | translate }} }
+                  @case ('product') { {{ 'DASHBOARD.MODES.PRODUCT' | translate }} }
+                  @case ('customer') { {{ 'DASHBOARD.MODES.CUSTOMER' | translate }} }
+                }
+              </h1>
+              <p class="page-title__sub">
+                {{ 'DASHBOARD.UPDATED_AT' | translate }}
+              </p>
+            </div>
+        
+            <!-- Conditional rendering based on API resolution state -->
+            @if (dashboardService.isLoading()) {
+              <!-- Visual feedback during high-latency network requests -->
+               <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-muted);">
+                <div style="width: 32px; height: 32px; border: 3px solid var(--border-color); border-top-color: var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px;"></div>
+                <p>{{ 'MESSAGE_LIST.LOADING' | translate }}</p>
+              </div>
+            } @else {
+              <!-- Contextual rendering delegating specific views to child widgets -->
+               <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
+               <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
+               <app-data-tables [mode]="currentView()"></app-data-tables>
+              }
+            </div>
+          </main>
+        </div>
+      </div>
+      <app-data-viz-drawer 
+      [isOpen]="isDrawerOpen()"
+      (closeDrawer)="isDrawerOpen.set(false)">
+      </app-data-viz-drawer>
+    </div>
   </div>
-
-  <!-- Off-canvas integration preserving layout integrity when invoked -->
-  <app-data-viz-drawer 
-    [isOpen]="isDrawerOpen()" 
-    (closeDrawer)="isDrawerOpen.set(false)">
-  </app-data-viz-drawer>
-  
-</div>

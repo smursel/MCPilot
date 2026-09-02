@@ -109,8 +109,7 @@ export const TRANSLATIONS = {
     },
 
     DRAWER: {
-      TITLE: 'Veri Görselleştirme AI',
-      SUBTITLE: 'Anında grafik oluşturma ve içgörüler'
+      TITLE: 'MCPilot',
     }
   },
   en: {
@@ -220,8 +219,7 @@ export const TRANSLATIONS = {
       }
     },
     DRAWER: {
-      TITLE: 'Data Visualization AI',
-      SUBTITLE: 'On-the-fly chart generation & Insights'
+      TITLE: 'MCPilot',
     }
   }
 };
