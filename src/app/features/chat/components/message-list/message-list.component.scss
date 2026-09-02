@@ -7,7 +7,7 @@
 .scroller {
   flex: 1;
   overflow-y: auto;
-  padding: clamp(14px, 2.5vh, 24px) clamp(14px, 3vw, 28px);
+  padding: clamp(14px, 2.5vh, 24px) clamp(14px, 3vw, 28px) 80px;
 }
 
 .messages {
