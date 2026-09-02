@@ -1,5 +1,5 @@
 <!-- Root structural wrapper binding spacing logic based on contextual mode -->
-<section class="kpi-cards" [class.global-strip]="mode === 'global'">
+<section class="kpi-cards" [class.global-strip]="mode() === 'global'">
   
   <!-- Iterates reactive metric signals utilizing Angular's optimized control flow -->
   @for (kpi of displayMetrics(); track kpi.label) {

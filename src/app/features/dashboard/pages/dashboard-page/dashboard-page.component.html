@@ -55,11 +55,10 @@
                 <p>{{ 'MESSAGE_LIST.LOADING' | translate }}</p>
               </div>
             } @else {
-              <!-- Contextual rendering delegating specific views to child widgets -->
-               <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
-               <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
-               <app-data-tables [mode]="currentView()"></app-data-tables>
-              }
+              <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
+              <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
+              <app-data-tables [mode]="currentView()"></app-data-tables>
+            }
             </div>
           </main>
         </div>

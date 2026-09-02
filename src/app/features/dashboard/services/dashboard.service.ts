@@ -15,6 +15,28 @@ export interface KpiSummary {
   aov: number; aovChange: number;
 }
 export interface MonthlyData { month: string; revenue: number; profit: number; }
+export interface ProductKpiSummary {
+  totalRevenue: number;
+  revenueChange: number;
+  activeProducts: number;
+  productsChange: number;
+  topCategoryShare: number;
+  categoryShareChange: number;
+  avgMargin: number;
+  marginChange: number;
+}
+
+export interface CustomerKpiSummary {
+  customerCount: number;
+  customerCountChange: number;
+  vipRevenueShare: number;
+  vipShareChange: number;
+  avgLtv: number;
+  ltvChange: number;
+  repeatOrderRate: number;
+  repeatRateChange: number;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +119,20 @@ private readonly dummyMonthlySales: MonthlyData[] = [
   { month: 'Tem', revenue: 140000, profit: 52000 },
   { month: 'Ağu', revenue: 146240, profit: 54400 }
 ];
+
+readonly productKpiSummary = signal<ProductKpiSummary>({
+    totalRevenue: 841240, revenueChange: 12.4,
+    activeProducts: 348, productsChange: 4.2,
+    topCategoryShare: 31.5, categoryShareChange: 2.8,
+    avgMargin: 35.2, marginChange: 1.5
+  });
+
+  readonly customerKpiSummary = signal<CustomerKpiSummary>({
+    customerCount: 1420, customerCountChange: 8.5,
+    vipRevenueShare: 45.0, vipShareChange: 5.1,
+    avgLtv: 8450, ltvChange: 6.3,
+    repeatOrderRate: 68.4, repeatRateChange: 3.2
+  });
 
   /**
    * Fetches all dashboard metrics concurrently.
