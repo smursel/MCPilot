@@ -37,6 +37,8 @@ export class DashboardService {
   readonly monthlyData = signal<MonthlyData[]>([]);
   readonly monthlySales = signal<MonthlyData[]>([]);
   readonly isLoading = signal<boolean>(false);
+  readonly currentStartDate = signal<string>('');
+  readonly currentEndDate = signal<string>('');
 
   // -------------------------------------------------------------------------
   // FALLBACK (DUMMY) DATA
@@ -105,6 +107,10 @@ private readonly dummyMonthlySales: MonthlyData[] = [
   loadDashboardData(startDate: string, endDate: string) {
     console.log(`Veri Yükleniyor: ${startDate} - ${endDate} arası...`);
     
+    // Gelen tarihleri global state'e kaydediyoruz ki UI buradan okusun
+    this.currentStartDate.set(startDate);
+    this.currentEndDate.set(endDate);
+
     // Activate loading state to trigger UI spinners
     this.isLoading.set(true);
 

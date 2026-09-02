@@ -4,6 +4,7 @@ import { ChatStore } from './chat.store';
 import { ConversationService } from './conversation.service';
 import { ModelService } from './model.service';
 import { ChatMessage, ModelSelection, ProblemDetails } from './models';
+import { DashboardService } from '@features/dashboard/services/dashboard.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatFacade {
@@ -11,6 +12,7 @@ export class ChatFacade {
   private readonly conversations = inject(ConversationService);
   private readonly models = inject(ModelService);
   private readonly store = inject(ChatStore);
+  private readonly dashboard = inject(DashboardService);
 
   init(): void {
     this.loadModel();
@@ -122,6 +124,16 @@ export class ChatFacade {
                 arguments: event.arguments,
                 done: false,
               });
+              
+              // Eğer AI'ın çalıştırdığı araçta tarih parametreleri varsa Dashboard'u senkronize et
+              const args = event.arguments as { from?: string; to?: string };
+              if (args && typeof args.from === 'string' && typeof args.to === 'string') {
+                // Sadece YYYY-MM-DD formatında (uzunluğu 10) olan geçerli tarihleri kabul et
+                if (args.from.length === 10 && args.to.length === 10) {
+                  this.dashboard.loadDashboardData(args.from, args.to);
+                }
+              }
+
               break;
 
             case 'tool_result':

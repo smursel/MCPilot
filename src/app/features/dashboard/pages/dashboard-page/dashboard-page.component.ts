@@ -36,6 +36,7 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
+
 export class DashboardPageComponent implements OnInit{
   // Injects the centralized store to dynamically bind localized text across the layout
   store = inject(AppStore);
@@ -49,9 +50,6 @@ export class DashboardPageComponent implements OnInit{
   // Drives conditional component rendering to reflect the user's current analytical focus
   currentView = signal<DashboardView>('sales');
 
-  activeStartDate = signal<string>('');
-  activeEndDate = signal<string>('');
-
   // Lifecycle hook: Triggers immediately after component initialization
   ngOnInit(): void {
     const today = new Date();
@@ -62,18 +60,11 @@ export class DashboardPageComponent implements OnInit{
       const day = d.getDate().toString().padStart(2, '0');
       return `${d.getFullYear()}-${month}-${day}`;
     };
-
-    const start = formatDate(firstDay);
-    const end = formatDate(today);
-
-    this.activeStartDate.set(start);
-    this.activeEndDate.set(end);
-
-    this.dashboardService.loadDashboardData(start, end);
+    this.dashboardService.loadDashboardData(formatDate(firstDay), formatDate(today));
   }
 
-  // ADDED: Kullanıcı ekranı küçültürse (Responsive test vb.) ve konuşma boşsa çekmeceyi gizle!
-  @HostListener('window:resize')
+// Listens for window resize to intelligently auto-close the drawer on smaller screens
+@HostListener('window:resize')
   onResize(): void {
     if (typeof window !== 'undefined' && window.innerWidth <= 900) {
       if (this.chatStore.isEmpty()) {
@@ -84,8 +75,6 @@ export class DashboardPageComponent implements OnInit{
 
  // Event handler for sidebar date range submissions
   onDateRangeChanged(range: {start: string, end: string}): void {
-    this.activeStartDate.set(range.start);
-    this.activeEndDate.set(range.end);
     this.dashboardService.loadDashboardData(range.start, range.end);
   }
 
