@@ -5,11 +5,17 @@
     <div class="hero">
       <h1>{{ 'MESSAGE_LIST.HERO_TITLE' | translate }}</h1>
       <p>{{ 'MESSAGE_LIST.HERO_DESC' | translate }}</p>
-      <ul class="samples">
-        <li>{{ 'MESSAGE_LIST.SAMPLE_1' | translate }}</li>
-        <li>{{ 'MESSAGE_LIST.SAMPLE_2' | translate }}</li>
-        <li>{{ 'MESSAGE_LIST.SAMPLE_3' | translate }}</li>
-      </ul>
+      <div class="samples">
+        <button type="button" class="sample-btn" (click)="setSample('MESSAGE_LIST.SAMPLE_1')">
+          {{ 'MESSAGE_LIST.SAMPLE_1' | translate }}
+        </button>
+        <button type="button" class="sample-btn" (click)="setSample('MESSAGE_LIST.SAMPLE_2')">
+          {{ 'MESSAGE_LIST.SAMPLE_2' | translate }}
+        </button>
+        <button type="button" class="sample-btn" (click)="setSample('MESSAGE_LIST.SAMPLE_3')">
+          {{ 'MESSAGE_LIST.SAMPLE_3' | translate }}
+        </button>
+      </div>
     </div>
   } @else {
     <div class="messages">

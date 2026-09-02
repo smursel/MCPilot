@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatFacade } from '@core/chat-facade.service';
 import { ChatStore } from '@core/chat.store';
@@ -15,15 +15,14 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
 export class MessageInputComponent {
   private readonly facade = inject(ChatFacade);
   readonly store = inject(ChatStore);
-  readonly text = signal('');
 
   send(): void {
-    const value = this.text().trim();
+    const value = this.store.draft().trim();
     if (!value || !this.store.canSend()) {
       return;
     }
     this.facade.send(value);
-    this.text.set('');
+    this.store.setDraft('');
   }
 
   onEnter(event: Event): void {

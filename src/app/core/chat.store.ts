@@ -17,6 +17,7 @@ export class ChatStore {
   private readonly _sending = signal(false);
   private readonly _loadingConversation = signal(false);
   private readonly _sidebarOpen = signal(false);
+  private readonly _draft = signal('');
 
   readonly conversations = this._conversations.asReadonly();
   readonly conversationId = this._conversationId.asReadonly();
@@ -26,6 +27,7 @@ export class ChatStore {
   readonly sending = this._sending.asReadonly();
   readonly loadingConversation = this._loadingConversation.asReadonly();
   readonly sidebarOpen = this._sidebarOpen.asReadonly();
+  readonly draft = this._draft.asReadonly();
 
   readonly isEmpty = computed(() => this._messages().length === 0);
   readonly configured = computed(() => this._model()?.configured ?? true);
@@ -59,6 +61,10 @@ export class ChatStore {
   closeSidebar(): void {
     this._sidebarOpen.set(false);
   }
+
+  setDraft(text: string): void {
+  this._draft.set(text);
+ }
 
   startNewConversation(): void {
     this._conversationId.set(null);

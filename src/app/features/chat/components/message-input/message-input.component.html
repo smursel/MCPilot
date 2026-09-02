@@ -7,8 +7,8 @@
     <textarea
       name="message"
       rows="1"
-      [ngModel]="text()"
-      (ngModelChange)="text.set($event)"
+      [ngModel]="store.draft()"
+      (ngModelChange)="store.setDraft($event)"
       (keydown.enter)="onEnter($event)"
       [placeholder]="!store.configured() ? ('INPUT.PLACEHOLDER_DISABLED' | translate) : ('INPUT.PLACEHOLDER' | translate)"
       [disabled]="!store.configured()"
@@ -18,7 +18,7 @@
     <button
       type="submit"
       class="send"
-      [disabled]="!text().trim() || !store.canSend()"
+      [disabled]="!store.draft().trim() || !store.canSend()"
       [attr.aria-label]="'INPUT.SEND' | translate"
     >
       @if (store.sending()) {

@@ -16,12 +16,15 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
   selector: 'app-message-list',
   standalone: true,
   imports: [MessageItemComponent, TranslatePipe],
+  providers: [TranslatePipe],
   templateUrl: './message-list.component.html',
   styleUrl: './message-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageListComponent implements AfterViewInit, OnDestroy {
   readonly store = inject(ChatStore);
+  // Inject the TranslatePipe for programmatic translations in TS
+  private readonly translator = inject(TranslatePipe);
   private readonly scroller = viewChild.required<ElementRef<HTMLElement>>('scroller');
   // State tracker for message array length
   private previousMessageCount = 0;
@@ -116,5 +119,11 @@ export class MessageListComponent implements AfterViewInit, OnDestroy {
         this.isAutoScrolling = false;
       });
     });
+  }
+
+  // Populate input draft when a sample is clicked
+  setSample(key: string): void {
+    const translatedText = this.translator.transform(key);
+    this.store.setDraft(translatedText);
   }
 }
