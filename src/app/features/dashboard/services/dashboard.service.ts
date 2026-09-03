@@ -1,6 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, of, forkJoin, finalize } from 'rxjs';
+import { apiUrl } from '@core/api.config';
 
 // SQL tablolarına ve fonksiyonlarına %100 uygun arayüzlerimiz (Interfaces)
 export interface TopProduct { rank: number; name: string; category: string; units: number; revenue: number; trend: 'up' | 'down'; }
@@ -25,7 +26,6 @@ export interface ProductKpiSummary {
   avgMargin: number;
   marginChange: number;
 }
-
 export interface CustomerKpiSummary {
   customerCount: number;
   customerCountChange: number;
@@ -45,8 +45,9 @@ export class DashboardService {
   // HttpClient'ı dependency injection ile servise dahil ediyoruz
   private http = inject(HttpClient);
   
-  // Backend API taban URL'si (.NET tarafındaki controller yoluna göre ayarlanacak)
-  private readonly baseUrl = '/api/analytics';
+  // Backend API taban URL'sini apiUrl ile sarmalayarak '/mcpilot-api/api/analytics' yapıyoruz.
+  // Bu sayede hem doğru adrese gider hem de apiKeyInterceptor devreye girer.
+  private readonly baseUrl = apiUrl('/api/analytics');
 
   // Sinyallerimizi başlangıçta boş array olarak başlatıyoruz.
   // Arayüz (UI) API'dan veri gelene kadar temiz bir şekilde bekler.
