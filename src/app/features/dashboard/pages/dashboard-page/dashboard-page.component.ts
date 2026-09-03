@@ -6,7 +6,7 @@ import { ChatStore } from '@core/chat.store';
 import { DashboardHeaderComponent } from '../../components/dashboard-header/dashboard-header.component';
 import { FilterSidebarComponent, DashboardView } from '../../components/filter-sidebar/filter-sidebar.component';
 import { KpiCardsComponent } from '../../components/kpi-cards/kpi-cards.component';
-import { ChartPlaceholdersComponent } from '../../components/chart-placeholders/chart-placeholders.component';
+import { DashboardChartsComponent } from '../../components/dashboard-charts/dashboard-charts.component';
 import { DataTablesComponent } from '../../components/data-tables/data-tables.component';
 import { DataVizDrawerComponent } from '../../components/data-viz-drawer/data-viz-drawer.component';
 import { DashboardService } from '../../services/dashboard.service'; // Import the service
@@ -29,7 +29,7 @@ import { TranslatePipe } from '../../../../shared/translate.pipe';
     FilterSidebarComponent, 
     KpiCardsComponent, 
     DataTablesComponent,
-    ChartPlaceholdersComponent, 
+    DashboardChartsComponent, 
     TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

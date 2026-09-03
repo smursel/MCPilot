@@ -23,6 +23,7 @@ export const TRANSLATIONS = {
     },
     // --- DASHBOARD MODÜLÜ  ---
     DASHBOARD: {
+      LOADING: 'Veriler analiz ediliyor...',
       WORKSPACE: 'Workspace',
       ECOMMERCE: 'E-Ticaret',
       ECOMMERCE_ANALYTICS: 'E-Ticaret Analitikleri',
@@ -94,6 +95,12 @@ export const TRANSLATIONS = {
       SEGMENT_PERF: 'Müşteri Segment Performansı',
       SEGMENT_PERF_SUB: 'Segmentlere göre ciro payı',
       SEGMENTs: 'Segmentler',
+      MONTHLY_GROWTH: 'Aylık Büyüme Oranı',
+      MONTHLY_GROWTH_SUB: 'Aydan aya ciro değişimi (%)',
+      CUSTOMER_SCATTER: 'Müşteri Sadakat Analizi',
+      CUSTOMER_SCATTER_SUB: 'Sadakat puanı, ciro ve sipariş hacmi (Balon boyutu siparişi temsil eder)',
+      NOT_ENOUGH_DATA: 'Karşılaştırma için yeterli veri yok.',
+      EXPAND_DATE_RANGE: '(Lütfen tarih aralığını genişletin)',
       CATEGORIES: {
         'Electronics': 'Elektronik',
         'Apparel': 'Giyim',
@@ -134,6 +141,7 @@ export const TRANSLATIONS = {
       SAMPLE_3: 'Show total monthly revenue as a table'
     },
     DASHBOARD: {
+      LOADING: 'Analyzing data...',
       WORKSPACE: 'Workspace',
       ECOMMERCE: 'E-Commerce',
       ECOMMERCE_ANALYTICS: 'E-Commerce Analytics',
@@ -205,6 +213,12 @@ export const TRANSLATIONS = {
       SEGMENT_PERF: 'Customer Segment Performance',
       SEGMENT_PERF_SUB: 'Revenue share by customer segment',
       SEGMENTs: 'Segment',
+      MONTHLY_GROWTH: 'Monthly Growth Rate',
+      MONTHLY_GROWTH_SUB: 'Month-over-month revenue change (%)',
+      CUSTOMER_SCATTER: 'Customer Loyalty Analysis',
+      CUSTOMER_SCATTER_SUB: 'Loyalty score, revenue and order volume (Bubble size represents orders)',
+      NOT_ENOUGH_DATA: 'Not enough data for comparison.',
+      EXPAND_DATE_RANGE: '(Please expand the date range)',
       CATEGORIES: {
         'Electronics': 'Electronics',
         'Apparel': 'Apparel',

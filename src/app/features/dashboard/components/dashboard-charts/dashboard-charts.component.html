@@ -1,0 +1,95 @@
+<!-- Grid container anchoring the modular chart components -->
+<section class="charts-grid" aria-label="Analytics Charts">
+
+  <!-- Isolated to 'sales' mode to prioritize macro-level performance tracking -->
+  @if (mode === 'sales') {
+    <!-- MONTHLY SALES TREND -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.SALES_TREND' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.SALES_TREND_SUB' | translate }}</p>
+        </div>
+        <button class="btn--icon" aria-label="More Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+      </div>
+      <div class="chart-container">
+        <!-- AI tabanlı jenerik grafik bileşenimiz -->
+        <app-dynamic-chart [options]="salesTrendChartOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+
+    <!-- MONTHLY GROWTH RATE -->
+    @if (hasMonthlyGrowthData()) {
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.MONTHLY_GROWTH' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.MONTHLY_GROWTH_SUB' | translate }}</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <app-dynamic-chart [options]="monthlyGrowthChartOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+  }
+}
+
+  <!-- SALES BY CATEGORY -->
+  <!-- Shared across sales and product modes for categorical distribution analysis -->
+  @if (mode === 'sales' || mode === 'product') {
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.CATEGORY_SALES' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.CATEGORY_SALES_SUB' | translate }}</p>
+        </div>
+        </div>
+      <div class="chart-container">
+        <app-dynamic-chart [options]="categorySalesChartOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+  }
+
+  <!-- CITY / REGION PERFORMANCE -->
+  <!-- Contextualized to expose geographic traction for products and customers -->
+  @if (mode === 'product' || mode === 'customer') {
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.REGION_PERF' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.REGION_PERF_SUB' | translate }}</p>
+        </div>
+        </div>
+      <div class="chart-container">
+        <app-dynamic-chart [options]="regionPerformanceChartOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+  }
+
+  @if (mode === 'customer') {
+    <!-- CUSTOMER SEGMENT --> <!-- Restricted to customer views for deep behavioral segmentation -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.SEGMENT_PERF' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.SEGMENT_PERF_SUB' | translate }}</p>
+        </div>
+        </div>
+      <div class="chart-container">
+        <app-dynamic-chart [options]="segmentPerformanceChartOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+    <!-- CUSTOMER LOYALTY SCATTER -->
+     <div class="chart-card">
+      <div class="chart-card__header">
+        <div>
+          <h3 class="chart-card__title">{{ 'CHARTS.CUSTOMER_SCATTER' | translate }}</h3>
+          <p class="chart-card__sub">{{ 'CHARTS.CUSTOMER_SCATTER_SUB' | translate }}</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <app-dynamic-chart [options]="customerLoyaltyScatterOption()" [theme]="store.theme()"></app-dynamic-chart>
+      </div>
+    </div>
+  }
+</section>

@@ -52,11 +52,11 @@
               <!-- Visual feedback during high-latency network requests -->
                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; color: var(--text-muted);">
                 <div style="width: 32px; height: 32px; border: 3px solid var(--border-color); border-top-color: var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px;"></div>
-                <p>{{ 'MESSAGE_LIST.LOADING' | translate }}</p>
+                <p>{{ 'DASHBOARD.LOADING' | translate }}</p>
               </div>
             } @else {
               <app-kpi-cards [mode]="currentView()"></app-kpi-cards>
-              <app-chart-placeholders [mode]="currentView()"></app-chart-placeholders>
+              <app-dashboard-charts [mode]="currentView()"></app-dashboard-charts>
               <app-data-tables [mode]="currentView()"></app-data-tables>
             }
             </div>

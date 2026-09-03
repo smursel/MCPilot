@@ -1,0 +1,47 @@
+/* 
+ * Utilizes auto-fit grid to enforce side-by-side layout on desktop viewports.
+ * Gracefully degrades to a single column on mobile without media query bloat.
+ * 'min(100%, 400px)' strictly prevents unnecessary stretching on wide screens.
+ */
+ /* Grid yapısı: Kartların yan yana ve alt alta düzenli durmasını sağlar */
+.charts-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); 
+  gap: 16px; 
+  margin-bottom: 24px; 
+}
+
+/* Card container structuring for spatial consistency */
+.chart-card { 
+  background: var(--surface-white); 
+  border: 1px solid var(--border-color); 
+  border-radius: 12px; 
+  padding: clamp(16px, 2vw, 20px); 
+  display: flex; 
+  flex-direction: column; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
+  min-height: 320px; /* Grafiklerin rahat çizilebilmesi için asgari bir yükseklik */
+}
+
+/* Header flex positioning to avoid action button overlaps */
+.chart-card__header { 
+  display: flex; 
+  align-items: flex-start; 
+  justify-content: space-between; 
+  margin-bottom: 8px; 
+  gap: 12px;
+}
+
+.chart-card__title { font-size: clamp(12px, 1.5vw, 13px); font-weight: 600; color: var(--text-primary); margin: 0; }
+.chart-card__sub { font-size: 11px; color: var(--text-muted); margin: 2px 0 0 0; }
+
+/* Grafiklerin çizileceği alan (DynamicChartComponent buranın içine oturacak) */
+.chart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Grafiğin kart dışına taşmamasını ve tüm boş alanı kaplamasını sağlar */
+  width: 100%;
+  min-height: 250px; 
+}
