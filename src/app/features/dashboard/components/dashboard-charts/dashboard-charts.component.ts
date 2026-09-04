@@ -47,7 +47,10 @@ export class DashboardChartsComponent {
     const tCharts = TRANSLATIONS[lang].CHARTS;
 
     return {
-      tooltip: { trigger: 'axis' }, // Üzerine gelince her iki çizgiyi (Ciro, Kar) aynı anda gösterir
+      tooltip: { 
+        trigger: 'axis',
+        confine: true
+       }, // Üzerine gelince her iki çizgiyi (Ciro, Kar) aynı anda gösterir
       legend: {
         data: [tCharts.REVENUE, tCharts.PROFIT],
         bottom: 0,
@@ -120,7 +123,11 @@ export class DashboardChartsComponent {
     const reversedData = [...data].reverse();
 
     return {
-      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      tooltip: { 
+        trigger: 'axis',
+        confine: true,
+        axisPointer: { type: 'shadow' } 
+      },
       grid: { left: '3%', right: '18%', bottom: '3%', top: '3%', containLabel: true },
       xAxis: { type: 'value', show: false }, // Alt eksendeki rakamları gizledik
       yAxis: {
@@ -202,6 +209,7 @@ export class DashboardChartsComponent {
     return {
       tooltip: {
         trigger: 'axis',
+        confine: true,
         axisPointer: { type: 'shadow' },
         formatter: '{b} <br/> Büyüme: <b>{c}%</b>'
       },
@@ -222,7 +230,7 @@ export class DashboardChartsComponent {
           type: 'bar',
           data: growthRates.map(val => ({
             value: val,
-            // 0'ın üstü yeşil (büyüme), altı kırmızı (küçülme) olsun
+            // Colors based on positive/negative growth
             itemStyle: { color: val >= 0 ? '#10B981' : '#FF6B6B', borderRadius: [4, 4, 0, 0] }
           })),
           label: {
@@ -231,7 +239,9 @@ export class DashboardChartsComponent {
             formatter: '{c}%',
             color: '#333',
             fontFamily: 'monospace',
-            fontWeight: 600
+            fontWeight: 600,
+            // Automatically hides labels when they collide during container resize
+            hideOverlap: true
           }
         }
       ]
@@ -251,6 +261,7 @@ export class DashboardChartsComponent {
     return {
       tooltip: {
         trigger: 'item',
+        confine: true,
         formatter: (params: any) => {
           // data.map içinde oluşturduğumuz value dizisini parçalıyoruz
           const val = params.value;
@@ -310,7 +321,7 @@ export class DashboardChartsComponent {
    */
   private buildDonutOption(data: any[], palette: string[]): echarts.EChartsOption {
     return {
-      tooltip: { trigger: 'item', formatter: '{b}: %{c}' },
+      tooltip: { trigger: 'item', formatter: '{b}: %{c}', confine: true },
       legend: {
         type: 'scroll',
         orient: 'vertical',
